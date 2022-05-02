@@ -25,9 +25,27 @@ public class Mine {
 		this.secteur= sec;
 	}
 	
+	@Override
 	public int getCoord()
 	{
 		return this.row;
+	}
+	
+	
+	@Override
+	public void setCoord(int n)
+	{
+		this.row=n;
+	}
+
+	@Override
+	public int getNbrMinerai() {
+		return capacite;
+	}
+
+	@Override
+	public void setNbrMinerai(int n) {
+		this.capacite=n;
 	}
 
 }
