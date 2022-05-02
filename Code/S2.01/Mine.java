@@ -1,5 +1,5 @@
 
-public class Entrepot extends Ressource {
+public class Mine {
 	
 	private int numero;
 	private String type;
@@ -7,7 +7,7 @@ public class Entrepot extends Ressource {
 	private int row;
 	private Secteur secteur;
 	
-	public Entrepot()
+	public Mine()
 	{
 		this.numero = 0;
 		this.type="inconnu";
@@ -16,7 +16,7 @@ public class Entrepot extends Ressource {
 		this.secteur=new Secteur();
 	}
 	
-	public Entrepot(int n, String t, int c, int x, Secteur sec)
+	public Mine(int n, String t, int c, int x, Secteur sec)
 	{
 		this.numero = n;
 		this.type=t;
@@ -24,28 +24,10 @@ public class Entrepot extends Ressource {
 		this.row=x;
 		this.secteur= sec;
 	}
-
 	
-	@Override
 	public int getCoord()
 	{
 		return this.row;
 	}
-	
-	
-	@Override
-	public void setCoord(int n)
-	{
-		this.row=n;
-	}
 
-	@Override
-	public int getNbrMinerai() {
-		return capacite;
-	}
-
-	@Override
-	public void setNbrMinerai(int n) {
-		this.capacite=n;
-	}
 }
