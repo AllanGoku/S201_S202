@@ -44,6 +44,18 @@ public class Secteur {
 		return this.eau;
 	}
 	
+	public void setEau(boolean e) {
+		this.eau = e;
+	}
+	
+	public Object[] getContenu() {
+		return this.contenu;
+	}
+	
+	public void setContenu(Object[] c) {
+		this.contenu = c;
+	}
+	
 	public int getCoordMine()
 	{
 		try
