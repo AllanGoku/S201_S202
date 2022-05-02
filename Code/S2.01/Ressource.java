@@ -1,5 +1,5 @@
 public abstract class Ressource{
-	private int typeMinerai;
-	private int nbrMinerai;
+	private int type;
+	private int capacite;
 	public abstract int getNbrMinerai();
 }
