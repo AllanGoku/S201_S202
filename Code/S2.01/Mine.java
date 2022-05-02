@@ -1,5 +1,5 @@
 
-public class Mine {
+public class Mine extends Ressource {
 	
 	private int numero;
 	private String type;
