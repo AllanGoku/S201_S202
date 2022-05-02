@@ -49,3 +49,4 @@ public class Mine extends Ressource {
 	}
 
 }
+
