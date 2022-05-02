@@ -25,9 +25,17 @@ public class Robot {
 		this.secteur= sec;
 	}
 	
+	
+	@Override
 	public int getCoord()
 	{
 		return this.row;
+	}
+	
+	@Override
+	public void setCoord(int n)
+	{
+		this.row=n;
 	}
 	
 	@Override
