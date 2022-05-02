@@ -1,5 +1,5 @@
 
-public class Robot {
+public class Robot extends Ressource {
 
 	private int numero;
 	private String type;
