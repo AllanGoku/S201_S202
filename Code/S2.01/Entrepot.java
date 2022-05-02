@@ -1,5 +1,5 @@
 
-public class Entrepot {
+public class Entrepot extends Ressource {
 	
 	private int numero;
 	private String type;
