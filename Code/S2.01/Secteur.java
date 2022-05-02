@@ -48,8 +48,12 @@ public class Secteur {
 		this.eau = e;
 	}
 	
-	public Object[] getContenu() {
+	public Ressource[] getContenu() {
 		return this.contenu;
+	}
+	
+	public setContenu(Ressource c) {
+		this.contenu = c;
 	}
 	
 	public void setContenu(Object[] c) {
