@@ -47,3 +47,4 @@ public class Entrepot extends Ressource {
 		this.capacite = n;
 	}
 }
+
