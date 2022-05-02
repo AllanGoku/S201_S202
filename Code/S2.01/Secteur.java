@@ -1,7 +1,7 @@
 import java.util.*;
 public class Secteur {
 	private boolean eau;
-	private Ressource[] contenu;
+	private Ressource[][] contenu;
 	private Mine mine;
 	private Entrepot entrepot;
 	private Robot robot;
@@ -9,9 +9,8 @@ public class Secteur {
 	public Secteur()
 	{
 		this.eau = false;
-		this.contenu = new Ressource[2];
 		Ressource[] first = new Ressource[2]; Ressource[] second = new Ressource[2];
-		this.contenu[0] = first; this.contenu[1] = second;
+		this.contenu = new Ressource[][] {first, second};
 		this.mine = null; this.entrepot = null;	this.robot = null;
 	}
 	
@@ -27,9 +26,8 @@ public class Secteur {
 			this.eau = true;
 			this.mine = null; this.entrepot = null; this.robot = null;
 			String w = "eau";
-			this.contenu = new Ressource[2];
 			Ressource[] first = new Ressource[2]; Ressource[] second = new Ressource[2];
-			first[0] = w ; first[1] = w; second[0] = w ; second[1] = w;
+			this.contenu = new Ressource[][] {first, second};
 			this.contenu[0] = first; this.contenu[1] = second;
 		}
 		else
@@ -48,15 +46,11 @@ public class Secteur {
 		this.eau = e;
 	}
 	
-	public Ressource[] getContenu() {
+	public Ressource[][] getContenu() {
 		return this.contenu;
 	}
 	
-	public setContenu(Ressource c) {
-		this.contenu = c;
-	}
-	
-	public void setContenu(Object[] c) {
+	public void setContenu(Ressource[][] c) {
 		this.contenu = c;
 	}
 	
