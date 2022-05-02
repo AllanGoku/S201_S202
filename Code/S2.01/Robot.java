@@ -30,5 +30,15 @@ public class Robot {
 		return this.row;
 	}
 	
+	@Override
+	public int getNbrMinerai() {
+		return this.capacite;
+	}
+
+	@Override
+	public void setNbrMinerai(int n) {
+		this.capacite = n;
+	}
+	
 	
 }
