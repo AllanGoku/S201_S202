@@ -2,6 +2,7 @@ public abstract class Ressource{
 	private String typeMinerai;
 	private int nbrMinerai;
 	private int numero;
+	private Secteur sonSecteur;
 	
 	public String getTypeMinerai() {
 		return typeMinerai;
@@ -21,5 +22,10 @@ public abstract class Ressource{
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	
+	public Secteur getSonSecteur() {
+		return sonSecteur;
+	}
+	public void setSonSecteur(Secteur sonSecteur) {
+		this.sonSecteur = sonSecteur;
+	}
 }
