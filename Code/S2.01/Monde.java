@@ -1,14 +1,13 @@
 import java.util.ArrayList;
 
 public class Monde {
-	private ArrayList<Secteur> lesSecteurs;
+	public Secteur[][] lesSecteurs;
 	
 	public Monde() {
-		this.lesSecteurs = new ArrayList<Secteur>();
+		this.lesSecteurs = new Secteur[10][10];
 	}
 	
 	public void addSecteur(Secteur sec) {
-		this.lesSecteurs.add(sec);
 	}
 	
 	public Monde createWorld()
