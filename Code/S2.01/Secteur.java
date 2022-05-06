@@ -5,27 +5,32 @@ public class Secteur {
 	private Mine mine;
 	private Entrepot entrepot;
 	private Robot robot;
+	private int[] coord;
 	
-	public Secteur()
+	public Secteur(int x, int y)
 	{
 		this.eau = false;
 		Ressource[] first = new Ressource[2]; Ressource[] second = new Ressource[2];
 		this.contenu = new Ressource[][] {first, second};
 		this.mine = null; this.entrepot = null;	this.robot = null;
+		this.coord = new int[2];
+		this.coord[0] = x;
+		this.coord[1] = y;
 	}
 	
-	public Secteur(boolean water)
+	public Secteur(boolean water,int x, int y)
 	{
 		this.eau = water;
+		this.coord[0] = x;
+		this.coord[1] = y;
 	}
 	
-	public Secteur(boolean water, Mine M, Entrepot E, Robot R)
+	public Secteur(boolean water, Mine M, Entrepot E, Robot R, int x, int y)
 	{
 		if(water)
 		{
 			this.eau = true;
 			this.mine = null; this.entrepot = null; this.robot = null;
-			String w = "eau";
 			Ressource[] first = new Ressource[2]; Ressource[] second = new Ressource[2];
 			this.contenu = new Ressource[][] {first, second};
 			this.contenu[0] = first; this.contenu[1] = second;
@@ -35,6 +40,8 @@ public class Secteur {
 			this.eau = false;
 			this.mine = M; this.entrepot = E; this.robot = R;
 		}
+		this.coord[0] = x;
+		this.coord[1] = y;
 	}
 	
 	public boolean getEau()
@@ -54,42 +61,40 @@ public class Secteur {
 		this.contenu = c;
 	}
 	
-	public int getCoordMine()
+	public boolean haveMine()
 	{
-		try
-		{
-			if(this.mine == null)
-				throw new RuntimeException("Il n'y a pas de mine dans ce secteur");
-		}catch(Exception e)
-		{
-			throw e;
-		}
-		return this.mine.getCoord();
+		if(this.mine == null) return false;
+		else return true;
 	}
 	
-	public int getCoordEntrepot()
+	public boolean haveEntrepot()
 	{
-		try
-		{
-			if(this.entrepot == null)
-				throw new RuntimeException("Il n'y a pas d'entrepot dans ce secteur");
-		}catch(Exception e)
-		{
-			throw e;
-		}
-		return this.entrepot.getCoord();
+		if(this.entrepot == null) return false;
+		else return true;
 	}
 	
-	public int getCoordRobot()
+	public boolean haveRobot()
 	{
-		try
-		{
-			if(this.robot == null)
-				throw new RuntimeException("Il n'y a pas de robot dans ce secteur");
-		}catch(Exception e)
-		{
-			throw e;
-		}
-		return this.robot.getCoord();
+		if(this.robot == null) return false;
+		else return true;
 	}
+	
+	public int getX() {
+		return coord[0];
+	}
+	
+	public int getY() {
+		return coord[1];
+	}
+	
+	public int[] getCoord() {
+		return coord;
+	}
+
+	public void setCoord(int x, int y) {
+		this.coord[0] = x;
+		this.coord[1] = y;
+	}
+	
+	
 }
