@@ -1,49 +1,29 @@
 
 public class Robot extends Ressource {
 
-	private int numero;
-	private String type;
 	private int capacite;
-	private int row;
-	private Secteur secteur;
 	
 	public Robot()
 	{
-		this.numero = 0;
-		this.type="inconnu";
+		setNumero(0);
+		setTypeMinerai("inconnu");
 		this.capacite=0;
-		this.row=0;
-		this.secteur=new Secteur();
+		this.setSonSecteur(new Secteur());
 	}
 	
 	public Robot(int n, String t, int c, int x, Secteur sec)
 	{
-		this.numero = n;
-		this.type=t;
+		setNumero(n);
+		setTypeMinerai(t);
 		this.capacite=c;
-		this.row=x;
-		this.secteur= sec;
+		this.setSonSecteur(sec);
 	}
 	
-	
-	@Override
-	public int getCoord()
-	{
-		return this.row;
-	}
-	
-	@Override
-	public void setCoord(int n)
-	{
-		this.row=n;
-	}
-	
-	@Override
+
 	public int getNbrMinerai() {
 		return this.capacite;
 	}
 
-	@Override
 	public void setNbrMinerai(int n) {
 		this.capacite = n;
 	}
