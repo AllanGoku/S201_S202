@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Random;
+
 public abstract class Ressource{
 	private String typeMinerai;
 	private int nbrMinerai;
@@ -9,6 +12,13 @@ public abstract class Ressource{
 	}
 	public void setTypeMinerai(String typeMinerai) {
 		this.typeMinerai = typeMinerai;
+	}
+	public void aleaMinerai() {
+		Random random = new Random();
+		int ver = random.nextInt(2);
+		ArrayList<String> min = new ArrayList<String>();
+		min.add("Nickel"); min.add("Or");
+		typeMinerai = min.get(ver);
 	}
 	public int getNbrMinerai() {
 		return nbrMinerai;
