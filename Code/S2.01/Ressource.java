@@ -1,11 +1,10 @@
-package application;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Ressource{
 	private String typeMinerai;
-	private int nbrMinerai;
+	private int CapaciteStockageMax;
+	private int capacite;
 	private int numero;
 	private Secteur sonSecteur;
 	
@@ -22,11 +21,11 @@ public abstract class Ressource{
 		min.add("Nickel"); min.add("Or");
 		typeMinerai = min.get(ver);
 	}
-	public int getNbrMinerai() {
-		return nbrMinerai;
+	public int getCapaciteStockageMax() {
+		return CapaciteStockageMax;
 	}
-	public void setNbrMinerai(int nbrMinerai) {
-		this.nbrMinerai = nbrMinerai;
+	public void setCapaciteStockageMax(int nbrMinerai) {
+		this.CapaciteStockageMax = nbrMinerai;
 	}
 	public int getNumero() {
 		return numero;
@@ -39,5 +38,11 @@ public abstract class Ressource{
 	}
 	public void setSonSecteur(Secteur sonSecteur) {
 		this.sonSecteur = sonSecteur;
+	}
+	public int getCapacite() {
+		return capacite;
+	}
+	public void setCapacite(int capacite) {
+		this.capacite = capacite;
 	}
 }
