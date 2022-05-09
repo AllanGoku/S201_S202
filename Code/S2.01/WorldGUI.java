@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class WorldGUI extends Application {
-	
+	private VBox rows;
 	@Override
 	public void start(Stage stage) {
 		try {
@@ -94,8 +94,11 @@ public class WorldGUI extends Application {
 		}
 	}
 	
-	public void moveRobot(int x, int y) {
-		
+	public void moveRobot(int beforeX, int beforeY, int afterX, int afterY) {
+		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(0)).getChildren().remove(0);
+		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(1)).getChildren().remove(0);
+		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(0)).getChildren().add(new Text("R"));
+		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(1)).getChildren().add(new Text("1"));
 	}
 	
 	public static void main(String args[])
