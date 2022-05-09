@@ -1,4 +1,3 @@
-
 public class Robot extends Ressource {
 
 	private int capacite;
@@ -6,12 +5,12 @@ public class Robot extends Ressource {
 	public Robot(int x, int y)
 	{
 		setNumero(0);
-		setTypeMinerai("inconnu");
+		aleaMinerai();
 		this.capacite=0;
 		this.setSonSecteur(new Secteur(x,y));
 	}
 	
-	public Robot(int n, String t, int c,Secteur sec)
+	public Robot(int n, String t, int c, Secteur sec)
 	{
 		setNumero(n);
 		setTypeMinerai(t);
