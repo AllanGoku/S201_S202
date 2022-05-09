@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -48,10 +50,7 @@ public class WorldGUI extends Application {
 			// Second is the number of the column   -> Sector
 			// Third is the number of the row       -> StackPane
 			// Fourth is the number of the column   -> StackPane
-			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren().add(new Text("A"));
-			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren().remove(0);
-			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren().get(1)).getChildren().add(new Text("B"));
-			
+			creation(rows);
 			Scene scene = new Scene(rows);
 			rows.setAlignment(Pos.BASELINE_CENTER);
 			stage.sizeToScene();
@@ -66,20 +65,41 @@ public class WorldGUI extends Application {
 	
 	public void creation(VBox rows) {
 		Monde monde = new Monde();
-		int size = monde.lesSecteurs.length;
+		monde.createWorld();
+		Secteur[][] lesSecteurs = monde.getSecteurs();  
+		int size = lesSecteurs.length;
 		for(int i=0;i<size;i++) {
-			Secteur[] row = monde.lesSecteurs[i];
-			for(Secteur j:row) {
-				if(j.getEau())
-					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren().get(1)).getChildren().add(new Text("B"));
+			Secteur[] row = lesSecteurs[i];
+			for(int j=0;j<row.length;j++) {
+				Secteur s = row[j];
+				if(s.getEau()) {
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(0)).getChildren().add(new Text("X"));
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(1)).getChildren().add(new Text("X"));
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(1)).getChildren().get(0)).getChildren().add(new Text("X"));
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(1)).getChildren().get(1)).getChildren().add(new Text("X"));
+				}
+				else if(s.haveEntrepot()) {
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(0)).getChildren().add(new Text("E"));
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(1)).getChildren().add(new Text("1"));
+				}
+				else if(s.haveMine()) {
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(0)).getChildren().add(new Text("M"));
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(1)).getChildren().add(new Text("1"));
+				}
+				if(s.haveRobot()) {
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(1)).getChildren().get(0)).getChildren().add(new Text("R"));
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(1)).getChildren().get(1)).getChildren().add(new Text("1"));
+				}
 			}
 		}
+	}
+	
+	public void moveRobot(int x, int y) {
 		
 	}
 	
 	public static void main(String args[])
 	{
-		Monde mondeJeu = new Monde().createWorld();
 		launch(args);
 	}
 }

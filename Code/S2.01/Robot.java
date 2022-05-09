@@ -1,3 +1,5 @@
+package application;
+
 public class Robot extends Ressource {
 
 	private int capacite;

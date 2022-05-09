@@ -1,15 +1,13 @@
+package application;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Monde {
-	private ArrayList<Secteur> lesSecteurs;
+	private Secteur[][] lesSecteurs;
 	
 	public Monde() {
-		this.lesSecteurs = new ArrayList<Secteur>();
-	}
-	
-	public void addSecteur(Secteur sec) {
-		this.lesSecteurs.add(sec);
+		this.lesSecteurs = new Secteur[10][10];
 	}
 	
 	public Monde createWorld()
@@ -44,20 +42,14 @@ public class Monde {
 					robots.add(rob);
 					compRob+=1;
 				}
-				this.addSecteur(sec);
+				this.lesSecteurs[i][u] = sec;
 			}
-		}
-		System.out.println(compEau);
-		System.out.println(compEnt);
-		System.out.println(compMine);
-		System.out.println(compRob);
-		System.out.println(getTypeManquantRobots(robots));
-		
+		}	
 		
 		return this;
 	}
 	
-	public ArrayList<Secteur> getSecteurs() {
+	public Secteur[][] getSecteurs() {
 		return this.lesSecteurs;
 	}
 	
