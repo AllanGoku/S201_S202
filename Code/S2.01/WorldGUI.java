@@ -34,11 +34,11 @@ public class WorldGUI extends Application {
 			HBox numX = new HBox();
 			numX.getChildren().add(new StackPane());
 			((StackPane) numX.getChildren().get(0)).setPrefSize(20, 20);
-			((StackPane) numX.getChildren().get(0)).setStyle("-fx-border-color: grey;");
+			((StackPane) numX.getChildren().get(0)).setStyle("-fx-border-color: grey; -fx-border-with:1px;");
 			for(int p=1; p<11;p++) {
 				numX.getChildren().add(new StackPane());
-				((StackPane) numX.getChildren().get(p)).setPrefSize(53, 20);
-				((StackPane) numX.getChildren().get(p)).setStyle("-fx-border-color: grey;");
+				((StackPane) numX.getChildren().get(p)).setPrefSize(50, 20);
+				((StackPane) numX.getChildren().get(p)).setStyle("-fx-border-color: grey; -fx-border-with:1px;");
 				((StackPane) numX.getChildren().get(p)).getChildren().add(new Text((""+(p-1))));
 			}
 			rows.getChildren().add(numX);
@@ -46,12 +46,13 @@ public class WorldGUI extends Application {
 			for(int k=1; k<11 ; k++) {
 				rows.getChildren().add(new HBox());
 				((HBox) rows.getChildren().get(k)).getChildren().add(new StackPane());
-				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).setPrefSize(20, 53);
-				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).setStyle("-fx-border-color: grey;");
+				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).setPrefSize(20, 50);
+				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).setStyle("-fx-border-color: grey; -fx-border-with:1px;");
 				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).getChildren().add(new Text((""+(k-1))));
 				for (int i = 1;i < 11;i++){
+					// 1 secteur -> 52 pixels
 					((HBox) rows.getChildren().get(k)).getChildren().add(new VBox());
-					((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).setStyle("-fx-border-color: black;");
+					((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).setStyle("-fx-border-color: black; -fx-border-with:1px;");
 
 					((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().add(new HBox());
 					((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().add(new HBox());
@@ -60,12 +61,12 @@ public class WorldGUI extends Application {
 						
 						((HBox) ((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().get(u)).getChildren().add(new StackPane());
 						((HBox) ((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().get(u)).getChildren().add(new StackPane());
+						// 1 case -> 25 pixels
+						((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().get(u)).getChildren().get(0)).setPrefSize(24, 24);
+						((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().get(u)).getChildren().get(0)).setStyle("-fx-border-color: grey; -fx-border-with:1px;");
 						
-						((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().get(u)).getChildren().get(0)).setPrefSize(25, 25);
-						((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().get(u)).getChildren().get(0)).setStyle("-fx-border-color: grey;");
-						
-						((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().get(u)).getChildren().get(1)).setPrefSize(25, 25);
-						((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().get(u)).getChildren().get(1)).setStyle("-fx-border-color: grey;");
+						((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().get(u)).getChildren().get(1)).setPrefSize(24, 24);
+						((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().get(u)).getChildren().get(1)).setStyle("-fx-border-color: grey; -fx-border-with:1px;");
 					}
 				}
 			}
@@ -140,7 +141,7 @@ public class WorldGUI extends Application {
 		
 		// border top
 		rows.getChildren().add(new HBox());
-		((HBox) rows.getChildren().get(12)).setStyle("-fx-border-color: black;");
+		((HBox) rows.getChildren().get(12)).setStyle("-fx-border-color: black; -fx-border-with:5px;");
 		
 		// display of the stats 
 		for(int i=0;i<sizeMines;i++) {
@@ -158,7 +159,7 @@ public class WorldGUI extends Application {
 		
 		// border bottom
 		rows.getChildren().add(new HBox());
-		((HBox) rows.getChildren().get(13+sizeMines+sizeEntrepots+sizeRobots)).setStyle("-fx-border-color: black;");
+		((HBox) rows.getChildren().get(13+sizeMines+sizeEntrepots+sizeRobots)).setStyle("-fx-border-color: black; -fx-border-with:5px;");
 	}
 	
 	public void addTour() {
