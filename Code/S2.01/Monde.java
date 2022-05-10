@@ -28,24 +28,24 @@ public class Monde {
 		for(int i=0;i<10;i++) {
 			for(int u =0; u<10;u++ ) {
 				int ver = random.nextInt(21);
-				Secteur sec = new Secteur(i,u);
+				Secteur sec = new Secteur(i,u,this);
 				if(ver == 6 && compEau <= 10) {
-					sec = new Secteur(true,i,u);
+					sec = new Secteur(true,i,u,this);
 					compEau+=1;
 				}
 				if(ver == 8 && compEnt < 2) {
-					this.lesEntrepots.add(new Entrepot(i,u));
-					sec = new Secteur(false, null, this.lesEntrepots.get(compEnt), null,i,u);
+					this.lesEntrepots.add(new Entrepot(i,"OR",u,sec));
+					sec = new Secteur(false, null, this.lesEntrepots.get(compEnt), null,i,u,this);
 					compEnt+=1;
 				}
 				if(ver == 10 && compMine < 4) {
-					this.lesMines.add(new Mine(i,u));
-					sec = new Secteur(false, this.lesMines.get(compMine), null, null,i,u);
+					this.lesMines.add(new Mine(i,"OR",u,sec));
+					sec = new Secteur(false, this.lesMines.get(compMine), null, null,i,u,this);
 					compMine+=1;
 				}
 				if(ver == 12 && compRob<5) {
-					this.lesRobots.add(new Robot(i,u));
-					sec = new Secteur(false, null, null, this.lesRobots.get(compRob),i,u);
+					this.lesRobots.add(new Robot(i,"OR",30,sec,u));
+					sec = new Secteur(false, null, null, this.lesRobots.get(compRob),i,u,this);
 					compRob+=1;
 				}
 				this.lesSecteurs[i][u] = sec;
