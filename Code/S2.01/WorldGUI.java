@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -14,6 +15,16 @@ import javafx.stage.Stage;
 public class WorldGUI extends Application {
 	private VBox rows;
 	private Monde monde;
+	
+	private ArrayList<Mine> mines;
+	private ArrayList<Entrepot> entrepots;
+	private ArrayList<Robot> robots;
+	
+
+	private int sizeMines;
+	private int sizeEntrepots;
+	private int sizeRobots;
+	
 	@Override
 	public void start(Stage stage) {
 		try {
@@ -66,6 +77,7 @@ public class WorldGUI extends Application {
 			// Fourth is the number of the column   -> StackPane
 			
 			creation();
+			addStats();
 			Scene scene = new Scene(rows);
 			rows.setAlignment(Pos.BASELINE_CENTER);
 			stage.sizeToScene();
@@ -81,6 +93,15 @@ public class WorldGUI extends Application {
 	public void creation() {
 		monde = new Monde();
 		monde.createWorld();
+
+		mines = monde.getMines();
+		entrepots = monde.getEntrepots();
+		robots = monde.getRobots();
+		
+		sizeMines = mines.size(); 
+		sizeEntrepots = entrepots.size();
+		sizeRobots = robots.size();
+		
 		Secteur[][] lesSecteurs = monde.getSecteurs();  
 		int size = lesSecteurs.length;
 		for(int i=1;i<11;i++) {
@@ -110,17 +131,34 @@ public class WorldGUI extends Application {
 	}
 	
 	public void addStats() {
-		ArrayList<Mine> mines = monde.getMines();
-		ArrayList<Entrepot> entrepots = monde.getEntrepots();
-		ArrayList<Robot> robots = monde.getRobots();
-		sizeMines = mines.size(); 
-		sizeEntrepots = entrepots.size();
-		sizeRobots = robots.size();
-		for(int i=0;i<monde.getMines().size();i++) {
+		
+		rows.getChildren().add(new HBox());
+		
+		// number of rounds 
+		((HBox) rows.getChildren().get(11)).getChildren().add(new Text("\tTour "));
+		((HBox) rows.getChildren().get(11)).getChildren().add(new Text("1"));
+		
+		// border top
+		rows.getChildren().add(new HBox());
+		((HBox) rows.getChildren().get(12)).setStyle("-fx-border-color: black;");
+		
+		// display of the stats 
+		for(int i=0;i<sizeMines;i++) {
 			rows.getChildren().add(new HBox());
-			rows.getChildren().add(new HBox());
-			rows.getChildren().get(12+get)
+			((HBox) rows.getChildren().get(13+i)).getChildren().add(new Text("\tM"+i+" "));
 		}
+		for(int j=0;j<sizeEntrepots;j++) {
+			rows.getChildren().add(new HBox());
+			((HBox) rows.getChildren().get(13+sizeMines+j)).getChildren().add(new Text("\tE"+j+" "));
+		}
+		for(int k=0;k<sizeRobots;k++) {
+			rows.getChildren().add(new HBox());
+			((HBox) rows.getChildren().get(13+sizeMines+sizeEntrepots+k)).getChildren().add(new Text("\tR"+k+" "));
+		}
+		
+		// border bottom
+		rows.getChildren().add(new HBox());
+		((HBox) rows.getChildren().get(13+sizeMines+sizeEntrepots+sizeRobots)).setStyle("-fx-border-color: black;");
 	}
 	
 	public void addTour() {
