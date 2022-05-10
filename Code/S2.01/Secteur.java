@@ -1,3 +1,4 @@
+package application;
 
 public class Secteur {
 	private boolean eau;
@@ -23,6 +24,7 @@ public class Secteur {
 	public Secteur(boolean water,int x, int y, Monde w)
 	{
 		this.eau = water;
+		this.coord = new int[2];
 		this.coord[0] = x;
 		this.coord[1] = y;
 		this.setSonMonde(w);
@@ -30,6 +32,7 @@ public class Secteur {
 	
 	public Secteur(boolean water, Mine M, Entrepot E, Robot R, int x, int y, Monde w)
 	{
+		this.coord = new int[2];
 		if(water)
 		{
 			this.eau = true;
