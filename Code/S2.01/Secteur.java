@@ -23,6 +23,7 @@ public class Secteur {
 	public Secteur(boolean water,int x, int y, Monde w)
 	{
 		this.eau = water;
+		this.coord = new int[2];
 		this.coord[0] = x;
 		this.coord[1] = y;
 		this.setSonMonde(w);
@@ -44,6 +45,7 @@ public class Secteur {
 			this.eau = false;
 			this.mine = M; this.entrepot = E; this.robot = R;
 		}
+		this.coord = new int[2];
 		this.coord[0] = x;
 		this.coord[1] = y;
 	}
