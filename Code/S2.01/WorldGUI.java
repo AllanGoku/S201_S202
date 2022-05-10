@@ -32,14 +32,16 @@ public class WorldGUI extends Application {
 			this.rows = new VBox();
 			rows.setStyle("-fx-border-color: black;");
 			HBox numX = new HBox();
-			numX.setMaxWidth(520);
+			numX.setMaxWidth(525);
 			numX.getChildren().add(new StackPane());
 			((StackPane) numX.getChildren().get(0)).setPrefSize(25, 20);
+			((StackPane) numX.getChildren().get(0)).setMaxWidth(50);
 			((StackPane) numX.getChildren().get(0)).setStyle("-fx-border-color: grey; -fx-border-with:1px;");
 			for(int p=1; p<11;p++) {
 				numX.getChildren().add(new StackPane());
 				((StackPane) numX.getChildren().get(p)).setPrefSize(50, 20);
 				((StackPane) numX.getChildren().get(p)).setMaxWidth(50);
+				((StackPane) numX.getChildren().get(p)).setMaxHeight(20);
 				((StackPane) numX.getChildren().get(p)).setStyle("-fx-border-color: grey; -fx-border-with:1px;");
 				((StackPane) numX.getChildren().get(p)).getChildren().add(new Text((""+(p-1))));
 			}
@@ -52,11 +54,14 @@ public class WorldGUI extends Application {
 				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).setPrefSize(25, 50);
 				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).setStyle("-fx-border-color: grey; -fx-border-with:1px;");
 				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).getChildren().add(new Text((""+(k-1))));
+				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).setMaxWidth(25);
+				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).setMaxHeight(50);
 				for (int i = 1;i < 11;i++){
 					// 1 secteur -> 52 pixels
 					((HBox) rows.getChildren().get(k)).getChildren().add(new VBox());
 					((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).setStyle("-fx-border-color: black; -fx-border-with:1px;");
 					((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).setMaxWidth(50);
+					((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).setMaxHeight(50);
 					((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().add(new HBox());
 					((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).getChildren().add(new HBox());
 					
