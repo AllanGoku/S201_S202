@@ -1,6 +1,4 @@
-package application;
 
-import java.util.*;
 public class Secteur {
 	private boolean eau;
 	private Ressource[][] contenu;
@@ -8,8 +6,9 @@ public class Secteur {
 	private Entrepot entrepot;
 	private Robot robot;
 	private int[] coord;
+	private Monde sonMonde;
 	
-	public Secteur(int x, int y)
+	public Secteur(int x, int y, Monde w)
 	{
 		this.eau = false;
 		Ressource[] first = new Ressource[2]; Ressource[] second = new Ressource[2];
@@ -18,17 +17,18 @@ public class Secteur {
 		this.coord = new int[2];
 		this.coord[0] = x;
 		this.coord[1] = y;
+		this.setSonMonde(w);
 	}
 	
-	public Secteur(boolean water,int x, int y)
+	public Secteur(boolean water,int x, int y, Monde w)
 	{
 		this.eau = water;
-		this.coord = new int[2];
 		this.coord[0] = x;
 		this.coord[1] = y;
+		this.setSonMonde(w);
 	}
 	
-	public Secteur(boolean water, Mine M, Entrepot E, Robot R, int x, int y)
+	public Secteur(boolean water, Mine M, Entrepot E, Robot R, int x, int y, Monde w)
 	{
 		if(water)
 		{
@@ -37,13 +37,13 @@ public class Secteur {
 			Ressource[] first = new Ressource[2]; Ressource[] second = new Ressource[2];
 			this.contenu = new Ressource[][] {first, second};
 			this.contenu[0] = first; this.contenu[1] = second;
+			this.sonMonde = w;
 		}
 		else
 		{
 			this.eau = false;
 			this.mine = M; this.entrepot = E; this.robot = R;
 		}
-		this.coord = new int[2];
 		this.coord[0] = x;
 		this.coord[1] = y;
 	}
@@ -83,6 +83,22 @@ public class Secteur {
 		else return true;
 	}
 	
+	public Mine getMine() {
+		return mine;
+	}
+
+	public void setMine(Mine mine) {
+		this.mine = mine;
+	}
+
+	public Entrepot getEntrepot() {
+		return entrepot;
+	}
+
+	public void setEntrepot(Entrepot entrepot) {
+		this.entrepot = entrepot;
+	}
+
 	public int getX() {
 		return coord[0];
 	}
@@ -98,6 +114,14 @@ public class Secteur {
 	public void setCoord(int x, int y) {
 		this.coord[0] = x;
 		this.coord[1] = y;
+	}
+
+	public Monde getSonMonde() {
+		return sonMonde;
+	}
+
+	public void setSonMonde(Monde sonMonde) {
+		this.sonMonde = sonMonde;
 	}
 	
 	
