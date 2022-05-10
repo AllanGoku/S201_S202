@@ -14,11 +14,11 @@ public class Robot extends Ressource {
 	}
 	
 
-	public int getNbrMinerai() {
+	public int getCapaciteMinage() {
 		return this.capacite_minage;
 	}
 
-	public void setNbrMinerai(int n) {
+	public void setCapaciteMinage(int n) {
 		this.capacite_minage = n;
 	}
 	
@@ -31,13 +31,13 @@ public class Robot extends Ressource {
 				if (capacite_minage > this.getSonSecteur().getMine().getNbrMinerai()) 
 				{
 					while ((this.getSonSecteur().getMine().getNbrMinerai() > 0) && (this.getCapacite() + this.getSonSecteur().getMine().getNbrMinerai() > this.getCapaciteStockageMax())) {
-						this.getSonSecteur().getMine().setNbrMinerai(getNbrMinerai()-1);
+						this.getSonSecteur().getMine().setNbrMinerai(getCapaciteMinage()-1);
 						this.setCapacite(getCapacite()+1);
 					}
 				}
 				else 
 				{
-					this.getSonSecteur().getMine().setNbrMinerai(getNbrMinerai()-capacite_minage);
+					this.getSonSecteur().getMine().setNbrMinerai(getCapaciteMinage()-capacite_minage);
 					this.setCapacite(getCapacite()+capacite_minage);
 				}
 			}
@@ -114,7 +114,7 @@ public class Robot extends Ressource {
 		}
 		else return null;
 	}
-public int[] getCoord()
+	public int[] getCoord()
 	{
 		return this.getSonSecteur().getCoord();
 	}
