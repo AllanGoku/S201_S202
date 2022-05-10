@@ -6,8 +6,6 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -15,17 +13,32 @@ import javafx.stage.Stage;
 
 public class WorldGUI extends Application {
 	private VBox rows;
+	private Monde monde;
 	@Override
 	public void start(Stage stage) {
 		try {
 			// Creation of the VBox containing the rows
-			VBox rows = new VBox();
+			this.rows = new VBox();
 			rows.setStyle("-fx-border-color: black;");
-			
+			HBox numX = new HBox();
+			numX.getChildren().add(new StackPane());
+			((StackPane) numX.getChildren().get(0)).setPrefSize(20, 20);
+			((StackPane) numX.getChildren().get(0)).setStyle("-fx-border-color: grey;");
+			for(int p=1; p<11;p++) {
+				numX.getChildren().add(new StackPane());
+				((StackPane) numX.getChildren().get(p)).setPrefSize(53, 20);
+				((StackPane) numX.getChildren().get(p)).setStyle("-fx-border-color: grey;");
+				((StackPane) numX.getChildren().get(p)).getChildren().add(new Text((""+(p-1))));
+			}
+			rows.getChildren().add(numX);
 			// Rows creation (loop of 10 because world is 10x10 sectors)
-			for(int k=0; k<10 ; k++) {
+			for(int k=1; k<11 ; k++) {
 				rows.getChildren().add(new HBox());
-				for (int i = 0;i < 10;i++){
+				((HBox) rows.getChildren().get(k)).getChildren().add(new StackPane());
+				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).setPrefSize(20, 53);
+				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).setStyle("-fx-border-color: grey;");
+				((StackPane) ((HBox) rows.getChildren().get(k)).getChildren().get(0)).getChildren().add(new Text((""+(k-1))));
+				for (int i = 1;i < 11;i++){
 					((HBox) rows.getChildren().get(k)).getChildren().add(new VBox());
 					((VBox) ((HBox) rows.getChildren().get(k)).getChildren().get(i)).setStyle("-fx-border-color: black;");
 
@@ -45,12 +58,14 @@ public class WorldGUI extends Application {
 					}
 				}
 			}
+			
 			// Numbers :
 			// First is the number of the row       -> Sector
 			// Second is the number of the column   -> Sector
 			// Third is the number of the row       -> StackPane
 			// Fourth is the number of the column   -> StackPane
-			creation(rows);
+			
+			creation();
 			Scene scene = new Scene(rows);
 			rows.setAlignment(Pos.BASELINE_CENTER);
 			stage.sizeToScene();
@@ -63,15 +78,15 @@ public class WorldGUI extends Application {
 		}
 	}
 	
-	public void creation(VBox rows) {
-		Monde monde = new Monde();
+	public void creation() {
+		monde = new Monde();
 		monde.createWorld();
 		Secteur[][] lesSecteurs = monde.getSecteurs();  
 		int size = lesSecteurs.length;
-		for(int i=0;i<size;i++) {
-			Secteur[] row = lesSecteurs[i];
-			for(int j=0;j<row.length;j++) {
-				Secteur s = row[j];
+		for(int i=1;i<11;i++) {
+			Secteur[] row = lesSecteurs[i-1];
+			for(int j=1;j<11;j++) {
+				Secteur s = row[j-1];
 				if(s.getEau()) {
 					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(0)).getChildren().add(new Text("X"));
 					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(1)).getChildren().add(new Text("X"));
@@ -94,7 +109,29 @@ public class WorldGUI extends Application {
 		}
 	}
 	
+	public void addStats() {
+		ArrayList<Mine> mines = monde.getMines();
+		ArrayList<Entrepot> entrepots = monde.getEntrepots();
+		ArrayList<Robot> robots = monde.getRobots();
+		sizeMines = mines.size(); 
+		sizeEntrepots = entrepots.size();
+		sizeRobots = robots.size();
+		for(int i=0;i<monde.getMines().size();i++) {
+			rows.getChildren().add(new HBox());
+			rows.getChildren().add(new HBox());
+			rows.getChildren().get(12+get)
+		}
+	}
+	
+	public void addTour() {
+		
+	}
+	
 	public void moveRobot(int beforeX, int beforeY, int afterX, int afterY) {
+		beforeX+=1;
+		beforeY+=1;
+		afterX+=1;
+		afterY+=1;
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(0)).getChildren().remove(0);
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(1)).getChildren().remove(0);
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(0)).getChildren().add(new Text("R"));

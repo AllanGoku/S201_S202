@@ -5,9 +5,15 @@ import java.util.Random;
 
 public class Monde {
 	private Secteur[][] lesSecteurs;
+	private ArrayList<Robot> lesRobots;
+	private ArrayList<Entrepot> lesEntrepots;
+	private ArrayList<Mine> lesMines;
 	
 	public Monde() {
 		this.lesSecteurs = new Secteur[10][10];
+		lesRobots = new ArrayList<Robot>();
+		lesEntrepots = new ArrayList<Entrepot>();
+		lesMines = new ArrayList<Mine>();
 	}
 	
 	public Monde createWorld()
@@ -19,7 +25,6 @@ public class Monde {
 		int compEau = 0;
 		int qtEnt = 0;
 		int compRob = 0;
-		ArrayList<Robot> robots = new ArrayList<Robot>();
 		for(int i=0;i<10;i++) {
 			for(int u =0; u<10;u++ ) {
 				int ver = random.nextInt(21);
@@ -29,17 +34,18 @@ public class Monde {
 					compEau+=1;
 				}
 				if(ver == 8 && compEnt < 2) {
-					sec = new Secteur(false, null, new Entrepot(i,u), null,i,u);
+					this.lesEntrepots.add(new Entrepot(i,u));
+					sec = new Secteur(false, null, this.lesEntrepots.get(compEnt), null,i,u);
 					compEnt+=1;
 				}
 				if(ver == 10 && compMine < 4) {
-					sec = new Secteur(false, new Mine(i,u), null, null,i,u);
+					this.lesMines.add(new Mine(i,u));
+					sec = new Secteur(false, this.lesMines.get(compMine), null, null,i,u);
 					compMine+=1;
 				}
 				if(ver == 12 && compRob<5) {
-					Robot rob = new Robot(i,u);
-					sec = new Secteur(false, null, null, rob,i,u);
-					robots.add(rob);
+					this.lesRobots.add(new Robot(i,u));
+					sec = new Secteur(false, null, null, this.lesRobots.get(compRob),i,u);
 					compRob+=1;
 				}
 				this.lesSecteurs[i][u] = sec;
@@ -69,5 +75,17 @@ public class Monde {
 			return "Or";
 		}
 		return null;
+	}
+	
+	public ArrayList<Entrepot> getEntrepots() {
+		return this.lesEntrepots;
+	}
+	
+	public ArrayList<Robot> getRobots() {
+		return this.lesRobots;
+	}
+	
+	public ArrayList<Mine> getMines() {
+		return this.lesMines;
 	}
 }
