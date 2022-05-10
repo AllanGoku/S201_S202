@@ -114,5 +114,8 @@ public class Robot extends Ressource {
 		}
 		else return null;
 	}
-	
+public int[] getCoord()
+	{
+		return this.getSonSecteur().getCoord();
+	}
 }
