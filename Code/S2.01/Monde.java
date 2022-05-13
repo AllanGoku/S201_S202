@@ -36,25 +36,30 @@ public class Monde {
 					if(compEnt>1) {
 						this.lesEntrepots.add(new Entrepot(i,"Or",u,sec));
 						sec.setEntrepot(this.lesEntrepots.get(compEnt));
+						this.lesEntrepots.get(compEnt).setNumero(2);
 					}
 					else {
 						this.lesEntrepots.add(new Entrepot(i,"Nickel",u,sec));
 						sec.setEntrepot(this.lesEntrepots.get(compEnt));
+						this.lesEntrepots.get(compEnt).setNumero(1);
 					}
 					compEnt+=1;
 				}
 				if(ver == 8 && compMine < 4) {
 					this.lesMines.add(new Mine(i,"Or",u,sec));
 					sec.setMine(this.lesMines.get(compMine));
+					this.lesMines.get(compMine).setNumero(compMine+1);
 					compMine+=1;
 				}
 				if(ver == 10 && compRob<5) {
 					this.lesRobots.add(new Robot(i,"Or",u,sec,0));
 					sec.setRobot(this.lesRobots.get(compRob));
+					this.lesRobots.get(compRob).setNumero(compRob+1);
 					compRob+=1;
 				}
 				this.lesSecteurs[i][u] = sec;
 			}
+		}
 		this.alea();
 		this.setTypeManquant();
 		return this;
