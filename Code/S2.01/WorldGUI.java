@@ -186,6 +186,14 @@ public class WorldGUI extends Application {
 		
 	}
 	
+	public void changeRobot() {
+		if(this.selected.getNumero()==this.robots.size()) {
+			this.selected = robots.get(0);
+		}else {
+			this.selected = robots.get(this.selected.getNumero());
+		}
+	}
+	
 	public void moveRobot(int beforeX, int beforeY, int afterX, int afterY) {
 		beforeX+=1;
 		beforeY+=1;
