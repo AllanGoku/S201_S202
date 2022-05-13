@@ -52,14 +52,6 @@ public class Robot extends Ressource {
 		{
 			if (this.getSonSecteur().getX() == maxLigne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()].getEau() || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()].haveRobot())
 			{
-				if (this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()].getEau())
-				{
-					System.out.println("Eau");
-				}
-				if (this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()].haveRobot())
-				{
-					System.out.println("Robot");
-				}
 				return null;
 			}
 			else
@@ -78,14 +70,6 @@ public class Robot extends Ressource {
 		{
 			if (this.getSonSecteur().getY() == 0 || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].getEau()|| this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].haveRobot())
 			{
-				if (this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].getEau())
-				{
-					System.out.println("Eau");
-				}
-				if (this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].haveRobot())
-				{
-					System.out.println("Robot");
-				}
 				return null;
 			}
 			else
@@ -104,14 +88,6 @@ public class Robot extends Ressource {
 		{
 			if (this.getSonSecteur().getX() == 0 || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()-1][this.getSonSecteur().getY()].getEau()|| this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()-1][this.getSonSecteur().getY()].haveRobot())
 			{
-				if (this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()-1][this.getSonSecteur().getY()].getEau())
-				{
-					System.out.println("Eau");
-				}
-				if (this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()-1][this.getSonSecteur().getY()].haveRobot())
-				{
-					System.out.println("Robot");
-				}
 				return null;
 			}
 			else
@@ -130,14 +106,6 @@ public class Robot extends Ressource {
 		{
 			if (this.getSonSecteur().getY() == maxColonne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1].getEau() || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1].haveRobot())
 			{
-				if (this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1].getEau())
-				{
-					System.out.println("Eau");
-				}
-				if (this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1].haveRobot())
-				{
-					System.out.println(this.getSonSecteur().getRobot().getNumero());
-				}
 				return null;
 			}
 			else
@@ -159,3 +127,4 @@ public class Robot extends Ressource {
 		return this.getSonSecteur().getCoord();
 	}
 }
+
