@@ -55,7 +55,8 @@ public class Monde {
 				}
 				this.lesSecteurs[i][u] = sec;
 			}
-		
+		this.alea();
+		this.setTypeManquant();
 		return this;
 	}
 	
