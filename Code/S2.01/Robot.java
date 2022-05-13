@@ -1,5 +1,4 @@
 package application;
-
 public class Robot extends Ressource {
 
 	private int capacite_minage;
@@ -51,7 +50,7 @@ public class Robot extends Ressource {
 		int maxColonne = this.getSonSecteur().getSonMonde().getSecteurs()[0].length;
 		if (mouv.contains("S"))
 		{
-			if (this.getSonSecteur().getY() == 0 || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].getEau())
+			if (this.getSonSecteur().getY() == 0 || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()].getEau())
 			{
 				return null;
 			}
@@ -59,7 +58,7 @@ public class Robot extends Ressource {
 			{
 				ancAndNewCord[0] = this.getSonSecteur().getX();
 				ancAndNewCord[1] = this.getSonSecteur().getY();
-				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1]);
+				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[ancAndNewCord[0]+1][ancAndNewCord[1]]);
 				ancAndNewCord[2] = this.getSonSecteur().getX();
 				ancAndNewCord[3] = this.getSonSecteur().getY();
 				return ancAndNewCord;
@@ -67,7 +66,7 @@ public class Robot extends Ressource {
 		}
 		else if (mouv.contains("O")) 
 		{
-			if (this.getSonSecteur().getX() == maxColonne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1].getEau())
+			if (this.getSonSecteur().getX() == maxColonne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].getEau())
 			{
 				return null;
 			}
@@ -75,7 +74,7 @@ public class Robot extends Ressource {
 			{
 				ancAndNewCord[0] = this.getSonSecteur().getX();
 				ancAndNewCord[1] = this.getSonSecteur().getY();
-				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1]);
+				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[ancAndNewCord[0]][ancAndNewCord[1]-1]);
 				ancAndNewCord[2] = this.getSonSecteur().getX();
 				ancAndNewCord[3] = this.getSonSecteur().getY();
 				return ancAndNewCord;
@@ -83,7 +82,7 @@ public class Robot extends Ressource {
 		}
 		else if (mouv.contains("N")) 
 		{
-			if (this.getSonSecteur().getY() == maxLigne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1].getEau())
+			if (this.getSonSecteur().getY() == maxLigne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()-1][this.getSonSecteur().getY()].getEau())
 			{
 				return null;
 			}
@@ -91,7 +90,7 @@ public class Robot extends Ressource {
 			{
 				ancAndNewCord[0] = this.getSonSecteur().getX();
 				ancAndNewCord[1] = this.getSonSecteur().getY();
-				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1]);
+				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[ancAndNewCord[0]-1][ancAndNewCord[1]]);
 				ancAndNewCord[2] = this.getSonSecteur().getX();
 				ancAndNewCord[3] = this.getSonSecteur().getY();
 				return ancAndNewCord;
@@ -99,7 +98,7 @@ public class Robot extends Ressource {
 		}
 		else if (mouv.contains("E")) 
 		{
-			if (this.getSonSecteur().getX() == 0 || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()].getEau())
+			if (this.getSonSecteur().getX() == 0 || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1].getEau())
 			{
 				return null;
 			}
@@ -107,7 +106,7 @@ public class Robot extends Ressource {
 			{
 				ancAndNewCord[0] = this.getSonSecteur().getX();
 				ancAndNewCord[1] = this.getSonSecteur().getY();
-				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()]);
+				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[ancAndNewCord[0]][ancAndNewCord[1]+1]);
 				ancAndNewCord[2] = this.getSonSecteur().getX();
 				ancAndNewCord[3] = this.getSonSecteur().getY();
 				return ancAndNewCord;
@@ -119,4 +118,5 @@ public class Robot extends Ressource {
 	{
 		return this.getSonSecteur().getCoord();
 	}
+}
 }
