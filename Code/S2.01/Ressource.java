@@ -18,7 +18,7 @@ public abstract class Ressource{
 		Random random = new Random();
 		int ver = random.nextInt(2);
 		ArrayList<String> min = new ArrayList<String>();
-		min.add("Nickel"); min.add("Or");
+		min.add("NI"); min.add("OR");
 		typeMinerai = min.get(ver);
 	}
 	public int getCapaciteStockageMax() {
