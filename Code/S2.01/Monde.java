@@ -1,4 +1,4 @@
-package application;
+
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -34,25 +34,25 @@ public class Monde {
 				}
 				if(ver == 6 && compEnt < 2) {
 					if(compEnt>1) {
-						this.lesEntrepots.add(new Entrepot(i,"Or",u,sec));
+						this.lesEntrepots.add(new Entrepot(i,"OR",u,sec));
 						sec.setEntrepot(this.lesEntrepots.get(compEnt));
 						this.lesEntrepots.get(compEnt).setNumero(2);
 					}
 					else {
-						this.lesEntrepots.add(new Entrepot(i,"Nickel",u,sec));
+						this.lesEntrepots.add(new Entrepot(i,"NI",u,sec));
 						sec.setEntrepot(this.lesEntrepots.get(compEnt));
 						this.lesEntrepots.get(compEnt).setNumero(1);
 					}
 					compEnt+=1;
 				}
 				if(ver == 8 && compMine < 4) {
-					this.lesMines.add(new Mine(i,"Or",u,sec));
+					this.lesMines.add(new Mine(i,"OR",u,sec));
 					sec.setMine(this.lesMines.get(compMine));
 					this.lesMines.get(compMine).setNumero(compMine+1);
 					compMine+=1;
 				}
 				if(ver == 10 && compRob<5) {
-					this.lesRobots.add(new Robot(i,"Or",u,sec,0));
+					this.lesRobots.add(new Robot(i,"OR",u,sec,0));
 					sec.setRobot(this.lesRobots.get(compRob));
 					this.lesRobots.get(compRob).setNumero(compRob+1);
 					compRob+=1;
@@ -64,6 +64,8 @@ public class Monde {
 		this.setTypeManquant();
 		return this;
 	}
+	
+
 	
 	public Secteur[][] getSecteurs() {
 		return this.lesSecteurs;
@@ -94,42 +96,30 @@ public class Monde {
 		int compOr = 0;
 		Random ran = new Random();
 		for(int i =0; i<this.lesRobots.size();i++) {
-			if(this.lesRobots.get(i).getTypeMinerai()=="Nickel") {
+			if(this.lesRobots.get(i).getTypeMinerai()=="NI") {
 				compNickel +=1;
 			}
 			else compOr+=1;
 		}
 		if(compNickel<=1) {
-			this.lesRobots.get(ran.nextInt(this.lesRobots.size())).setTypeMinerai("Nickel");
+			this.lesRobots.get(ran.nextInt(this.lesRobots.size())).setTypeMinerai("NI");
 		}
 		else if(compOr<=1) {
-			this.lesRobots.get(ran.nextInt(this.lesRobots.size())).setTypeMinerai("Or");
+			this.lesRobots.get(ran.nextInt(this.lesRobots.size())).setTypeMinerai("OR");
 		}
 		compNickel = 0;
 		compOr = 0;
 		for(int i =0; i<this.lesMines.size();i++) {
-			if(this.lesMines.get(i).getTypeMinerai()=="Nickel") {
+			if(this.lesMines.get(i).getTypeMinerai()=="NI") {
 				compNickel +=1;
 			}
 			else compOr+=1;
 		}
 		if(compNickel<=1) {
-			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("Nickel");
+			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("NI");
 		}
 		else if(compOr<=1) {
-			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("Or");
+			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("OR");
 		}
-	}
-	
-	public ArrayList<Entrepot> getEntrepots() {
-		return this.lesEntrepots;
-	}
-	
-	public ArrayList<Robot> getRobots() {
-		return this.lesRobots;
-	}
-	
-	public ArrayList<Mine> getMines() {
-		return this.lesMines;
 	}
 }
