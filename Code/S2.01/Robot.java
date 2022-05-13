@@ -50,7 +50,7 @@ public class Robot extends Ressource {
 		int maxColonne = this.getSonSecteur().getSonMonde().getSecteurs()[0].length;
 		if (mouv.contains("S"))
 		{
-			if (this.getSonSecteur().getY() == 0 || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()].getEau())
+			if (this.getSonSecteur().getX() == maxLigne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()].getEau() || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()].haveRobot())
 			{
 				return null;
 			}
@@ -66,7 +66,7 @@ public class Robot extends Ressource {
 		}
 		else if (mouv.contains("O")) 
 		{
-			if (this.getSonSecteur().getX() == maxColonne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].getEau())
+			if (this.getSonSecteur().getY() == maxColonne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].getEau()|| this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].haveRobot())
 			{
 				return null;
 			}
@@ -82,7 +82,7 @@ public class Robot extends Ressource {
 		}
 		else if (mouv.contains("N")) 
 		{
-			if (this.getSonSecteur().getY() == maxLigne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()-1][this.getSonSecteur().getY()].getEau())
+			if (this.getSonSecteur().getX() == 0 || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()-1][this.getSonSecteur().getY()].getEau()|| this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()-1][this.getSonSecteur().getY()].haveRobot())
 			{
 				return null;
 			}
@@ -98,7 +98,7 @@ public class Robot extends Ressource {
 		}
 		else if (mouv.contains("E")) 
 		{
-			if (this.getSonSecteur().getX() == 0 || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1].getEau())
+			if (this.getSonSecteur().getY() == 0 || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1].getEau() || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()+1].haveRobot())
 			{
 				return null;
 			}
@@ -118,5 +118,4 @@ public class Robot extends Ressource {
 	{
 		return this.getSonSecteur().getCoord();
 	}
-}
 }
