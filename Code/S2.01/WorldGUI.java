@@ -3,8 +3,12 @@ package application;
 import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -19,11 +23,13 @@ public class WorldGUI extends Application {
 	private ArrayList<Mine> mines;
 	private ArrayList<Entrepot> entrepots;
 	private ArrayList<Robot> robots;
-	
 
 	private int sizeMines;
 	private int sizeEntrepots;
 	private int sizeRobots;
+	
+	// selected robot
+	public Robot selected;
 	
 	@Override
 	public void start(Stage stage) {
@@ -87,11 +93,15 @@ public class WorldGUI extends Application {
 			
 			creation();
 			addStats();
+			rows.setAlignment(Pos.CENTER);
+			((HBox) rows.getChildren().get(11)).setAlignment(Pos.CENTER);
 			Scene scene = new Scene(rows);
-			rows.setAlignment(Pos.BASELINE_CENTER);
+			EventWorld e = new EventWorld(this);
+			selected = monde.getRobots().get(0);
+			scene.addEventFilter(KeyEvent.KEY_PRESSED, e);
+			stage.setScene(scene);
 			stage.sizeToScene();
 			stage.setTitle("Jeu");
-			stage.setScene(scene);
 			stage.show();
 			
 		} catch(Exception e) {
@@ -141,33 +151,35 @@ public class WorldGUI extends Application {
 	
 	public void addStats() {
 		
-		rows.getChildren().add(new HBox());
-		
-		// number of rounds 
-		((HBox) rows.getChildren().get(11)).getChildren().add(new Text("\tTour "));
+		// round display
+		rows.getChildren().add(new HBox());		
+		((HBox) rows.getChildren().get(11)).getChildren().add(new Text("Tour "));
 		((HBox) rows.getChildren().get(11)).getChildren().add(new Text("1"));
+		((HBox) rows.getChildren().get(11)).setStyle("-fx-border-color: black; -fx-border-with:5px;");
+		((HBox) rows.getChildren().get(11)).setMaxWidth(525);
 		
-		// border top
-		rows.getChildren().add(new HBox());
-		((HBox) rows.getChildren().get(12)).setStyle("-fx-border-color: black; -fx-border-with:5px;");
-		
+		// vbox for the stats
+		VBox stats = new VBox();
 		// display of the stats 
 		for(int i=0;i<sizeMines;i++) {
-			rows.getChildren().add(new HBox());
-			((HBox) rows.getChildren().get(13+i)).getChildren().add(new Text("\tM"+i+" "));
+			stats.getChildren().add(new HBox());
+			((HBox) stats.getChildren().get(i)).getChildren().add(new Text("M"+(i+1)+" "));
+			((HBox) stats.getChildren().get(i)).setAlignment(Pos.CENTER);
 		}
 		for(int j=0;j<sizeEntrepots;j++) {
-			rows.getChildren().add(new HBox());
-			((HBox) rows.getChildren().get(13+sizeMines+j)).getChildren().add(new Text("\tE"+j+" "));
+			stats.getChildren().add(new HBox());
+			((HBox) stats.getChildren().get(sizeMines + j)).getChildren().add(new Text("E"+(j+1)+" "));
+			((HBox) stats.getChildren().get(sizeMines + j)).setAlignment(Pos.CENTER);
 		}
 		for(int k=0;k<sizeRobots;k++) {
-			rows.getChildren().add(new HBox());
-			((HBox) rows.getChildren().get(13+sizeMines+sizeEntrepots+k)).getChildren().add(new Text("\tR"+k+" "));
+			stats.getChildren().add(new HBox());
+			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text("R"+(k+1)+" "));
+			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).setAlignment(Pos.CENTER);
 		}
 		
-		// border bottom
-		rows.getChildren().add(new HBox());
-		((HBox) rows.getChildren().get(13+sizeMines+sizeEntrepots+sizeRobots)).setStyle("-fx-border-color: black; -fx-border-with:5px;");
+		stats.setStyle("-fx-border-color: black; -fx-border-with:5px;");
+		stats.setMaxWidth(525);
+		rows.getChildren().add(stats);
 	}
 	
 	public void addTour() {
