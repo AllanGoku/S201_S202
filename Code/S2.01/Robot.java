@@ -46,8 +46,8 @@ public class Robot extends Ressource {
 	
 	public int[] seDeplacer(String mouv){
 		int [] ancAndNewCord = new int[4];
-		int maxLigne = this.getSonSecteur().getSonMonde().getSecteurs().length;
-		int maxColonne = this.getSonSecteur().getSonMonde().getSecteurs()[0].length;
+		int maxLigne = 9;
+		int maxColonne = 9;
 		if (mouv.contains("S"))
 		{
 			if (this.getSonSecteur().getX() == maxLigne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()].getEau() || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()+1][this.getSonSecteur().getY()].haveRobot())
@@ -66,7 +66,7 @@ public class Robot extends Ressource {
 		}
 		else if (mouv.contains("O")) 
 		{
-			if (this.getSonSecteur().getY() == maxColonne || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].getEau()|| this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].haveRobot())
+			if (this.getSonSecteur().getY() == 0 || this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].getEau()|| this.getSonSecteur().getSonMonde().getSecteurs()[this.getSonSecteur().getX()][this.getSonSecteur().getY()-1].haveRobot())
 			{
 				return null;
 			}
