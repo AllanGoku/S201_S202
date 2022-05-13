@@ -127,6 +127,9 @@ public class Secteur {
 	public void setSonMonde(Monde sonMonde) {
 		this.sonMonde = sonMonde;
 	}
+	public void setRobot(Robot rob) {
+		this.robot=rob;
+	}
 	
 	
 }
