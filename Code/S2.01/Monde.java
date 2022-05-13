@@ -20,37 +20,41 @@ public class Monde {
 	{
 		Random random = new Random();
 		int compEnt = 0;
-		int compRobot = 0;
 		int compMine = 0;
 		int compEau = 0;
-		int qtEnt = 0;
 		int compRob = 0;
 		for(int i=0;i<10;i++) {
 			for(int u =0; u<10;u++ ) {
-				int ver = random.nextInt(21);
+				int ver = random.nextInt(15);
 				Secteur sec = new Secteur(i,u,this);
-				if(ver == 6 && compEau <= 10) {
-					sec = new Secteur(true,i,u,this);
+				if(ver == 4 && compEau <= 10) {
+					sec = new Secteur(i,u,this);
+					sec.setEau(true);
 					compEau+=1;
 				}
-				if(ver == 8 && compEnt < 2) {
-					this.lesEntrepots.add(new Entrepot(i,"OR",u,sec));
-					sec = new Secteur(false, null, this.lesEntrepots.get(compEnt), null,i,u,this);
+				if(ver == 6 && compEnt < 2) {
+					if(compEnt>1) {
+						this.lesEntrepots.add(new Entrepot(i,"Or",u,sec));
+						sec.setEntrepot(this.lesEntrepots.get(compEnt));
+					}
+					else {
+						this.lesEntrepots.add(new Entrepot(i,"Nickel",u,sec));
+						sec.setEntrepot(this.lesEntrepots.get(compEnt));
+					}
 					compEnt+=1;
 				}
-				if(ver == 10 && compMine < 4) {
-					this.lesMines.add(new Mine(i,"OR",u,sec));
-					sec = new Secteur(false, this.lesMines.get(compMine), null, null,i,u,this);
+				if(ver == 8 && compMine < 4) {
+					this.lesMines.add(new Mine(i,"Or",u,sec));
+					sec.setMine(this.lesMines.get(compMine));
 					compMine+=1;
 				}
-				if(ver == 12 && compRob<5) {
-					this.lesRobots.add(new Robot(i,"OR",30,sec,u));
-					sec = new Secteur(false, null, null, this.lesRobots.get(compRob),i,u,this);
+				if(ver == 10 && compRob<5) {
+					this.lesRobots.add(new Robot(i,"Or",u,sec,0));
+					sec.setRobot(this.lesRobots.get(compRob));
 					compRob+=1;
 				}
 				this.lesSecteurs[i][u] = sec;
 			}
-		}	
 		
 		return this;
 	}
