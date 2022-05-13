@@ -66,9 +66,11 @@ public class Robot extends Ressource {
 			{
 				ancAndNewCord[0] = this.getSonSecteur().getX();
 				ancAndNewCord[1] = this.getSonSecteur().getY();
+				this.getSonSecteur().setRobot(null);
 				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[ancAndNewCord[0]+1][ancAndNewCord[1]]);
 				ancAndNewCord[2] = this.getSonSecteur().getX();
 				ancAndNewCord[3] = this.getSonSecteur().getY();
+				this.getSonSecteur().setRobot(this);
 				return ancAndNewCord;
 			}
 		}
@@ -90,9 +92,11 @@ public class Robot extends Ressource {
 			{
 				ancAndNewCord[0] = this.getSonSecteur().getX();
 				ancAndNewCord[1] = this.getSonSecteur().getY();
+				this.getSonSecteur().setRobot(null);
 				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[ancAndNewCord[0]][ancAndNewCord[1]-1]);
 				ancAndNewCord[2] = this.getSonSecteur().getX();
 				ancAndNewCord[3] = this.getSonSecteur().getY();
+				this.getSonSecteur().setRobot(this);
 				return ancAndNewCord;
 			}
 		}
@@ -114,9 +118,11 @@ public class Robot extends Ressource {
 			{
 				ancAndNewCord[0] = this.getSonSecteur().getX();
 				ancAndNewCord[1] = this.getSonSecteur().getY();
+				this.getSonSecteur().setRobot(null);
 				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[ancAndNewCord[0]-1][ancAndNewCord[1]]);
 				ancAndNewCord[2] = this.getSonSecteur().getX();
 				ancAndNewCord[3] = this.getSonSecteur().getY();
+				this.getSonSecteur().setRobot(this);
 				return ancAndNewCord;
 			}
 		}
@@ -138,9 +144,11 @@ public class Robot extends Ressource {
 			{
 				ancAndNewCord[0] = this.getSonSecteur().getX();
 				ancAndNewCord[1] = this.getSonSecteur().getY();
+				this.getSonSecteur().setRobot(null);
 				this.setSonSecteur(this.getSonSecteur().getSonMonde().getSecteurs()[ancAndNewCord[0]][ancAndNewCord[1]+1]);
 				ancAndNewCord[2] = this.getSonSecteur().getX();
 				ancAndNewCord[3] = this.getSonSecteur().getY();
+				this.getSonSecteur().setRobot(this);
 				return ancAndNewCord;
 			}
 		}
