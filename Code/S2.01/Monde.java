@@ -59,22 +59,56 @@ public class Monde {
 		return this.lesSecteurs;
 	}
 	
-	public String getTypeManquantRobots(ArrayList<Robot> robots){
+	public void alea() {
+		Random ran = new Random();
+		for(int i=0;i<this.lesMines.size();i++) {
+			Mine obj = this.lesMines.get(i);
+			int alea = ran.nextInt(50);
+			alea+=50;
+			obj.setCapaciteStockageMax(alea);
+			obj.aleaMinerai();
+			System.out.println("Mines: "+obj.getTypeMinerai()+"["+obj.getSonSecteur().getX()+","+obj.getSonSecteur().getY()+"]");
+		}
+		for(int i=0;i<this.lesRobots.size();i++) {
+			Robot obj = this.lesRobots.get(i);
+			int alea = ran.nextInt(8);
+			alea+=1;
+			obj.setCapaciteStockageMax(alea);
+			obj.aleaMinerai();
+			System.out.println("Robots: "+obj.getTypeMinerai()+"["+obj.getSonSecteur().getX()+","+obj.getSonSecteur().getY()+"]");
+		}
+	}
+	
+	public void setTypeManquant(){
 		int compNickel =0;
 		int compOr = 0;
-		for(int i =0; i<robots.size();i++) {
-			if(robots.get(i).getTypeMinerai()=="Nickel") {
+		Random ran = new Random();
+		for(int i =0; i<this.lesRobots.size();i++) {
+			if(this.lesRobots.get(i).getTypeMinerai()=="Nickel") {
 				compNickel +=1;
 			}
 			else compOr+=1;
 		}
-		if(compNickel==0) {
-			return "Nickel";
+		if(compNickel<=1) {
+			this.lesRobots.get(ran.nextInt(this.lesRobots.size())).setTypeMinerai("Nickel");
 		}
-		else if(compOr==0) {
-			return "Or";
+		else if(compOr<=1) {
+			this.lesRobots.get(ran.nextInt(this.lesRobots.size())).setTypeMinerai("Or");
 		}
-		return null;
+		compNickel = 0;
+		compOr = 0;
+		for(int i =0; i<this.lesMines.size();i++) {
+			if(this.lesMines.get(i).getTypeMinerai()=="Nickel") {
+				compNickel +=1;
+			}
+			else compOr+=1;
+		}
+		if(compNickel<=1) {
+			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("Nickel");
+		}
+		else if(compOr<=1) {
+			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("Or");
+		}
 	}
 	
 	public ArrayList<Entrepot> getEntrepots() {
