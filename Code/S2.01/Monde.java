@@ -78,6 +78,7 @@ public class Monde {
 			int alea = ran.nextInt(50);
 			alea+=50;
 			obj.setCapaciteStockageMax(alea);
+			obj.setCapacite(alea);
 			obj.aleaMinerai();
 			System.out.println("Mines: "+obj.getTypeMinerai()+"["+obj.getSonSecteur().getX()+","+obj.getSonSecteur().getY()+"]");
 		}
@@ -86,6 +87,7 @@ public class Monde {
 			int alea = ran.nextInt(8);
 			alea+=1;
 			obj.setCapaciteStockageMax(alea);
+			obj.setCapacite(alea);
 			obj.aleaMinerai();
 			System.out.println("Robots: "+obj.getTypeMinerai()+"["+obj.getSonSecteur().getX()+","+obj.getSonSecteur().getY()+"]");
 		}
