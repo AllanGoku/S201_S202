@@ -33,17 +33,10 @@ public class Monde {
 					compEau+=1;
 				}
 				if(ver == 6 && compEnt < 2) {
-					if(compEnt>1) {
-						this.lesEntrepots.add(new Entrepot(i,"OR",u,sec));
-						sec.setEntrepot(this.lesEntrepots.get(compEnt));
-						this.lesEntrepots.get(compEnt).setNumero(2);
-					}
-					else {
-						this.lesEntrepots.add(new Entrepot(i,"NI",u,sec));
-						sec.setEntrepot(this.lesEntrepots.get(compEnt));
-						this.lesEntrepots.get(compEnt).setNumero(1);
-					}
-					compEnt+=1;
+					this.lesEntrepots.add(new Entrepot(1,"OR",sec));
+					sec.setEntrepot(this.lesEntrepots.get(compEnt));
+					this.lesEntrepots.add(new Entrepot(2,"NI",sec));
+					sec.setEntrepot(this.lesEntrepots.get(compEnt));
 				}
 				if(ver == 8 && compMine < 4) {
 					this.lesMines.add(new Mine(i,"OR",u,sec));
