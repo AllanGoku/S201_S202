@@ -48,13 +48,11 @@ public class Monde {
 				if(ver == 8 && compMine < 4) {
 					this.lesMines.add(new Mine(compMine+1,"OR",0,sec));
 					sec.setMine(this.lesMines.get(compMine));
-					this.lesMines.get(compMine).setNumero(compMine+1);
 					compMine+=1;
 				}
 				if(ver == 10 && compRob<5) {
-					this.lesRobots.add(new Robot(compRob+=1,"OR",0,sec,0));
+					this.lesRobots.add(new Robot(compRob+1,"OR",0,sec,0));
 					sec.setRobot(this.lesRobots.get(compRob));
-					this.lesRobots.get(compRob).setNumero(compRob+1);
 					compRob+=1;
 				}
 				this.lesSecteurs[i][u] = sec;
