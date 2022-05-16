@@ -23,37 +23,56 @@ public class EventWorld implements EventHandler{
 				}else {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
+					world.num+=1;
 				}
 			}
-			if(((KeyEvent) event).getCode() == KeyCode.LEFT) {
+			else if(((KeyEvent) event).getCode() == KeyCode.LEFT) {
 				int[] coord = world.selected.seDeplacer("O");
 				if(coord == null) {
 					System.out.println("Mouvement impossible");
 				}else {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
+					world.num+=1;
 				}
 			}
-			if(((KeyEvent) event).getCode() == KeyCode.RIGHT) {
+			else if(((KeyEvent) event).getCode() == KeyCode.RIGHT) {
 				int[] coord = world.selected.seDeplacer("E");
 				if(coord == null) {
 					System.out.println("Mouvement impossible");
 				}else {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
+					world.num+=1;
 				}
 			}
-			if(((KeyEvent) event).getCode() == KeyCode.UP) {
+			else if(((KeyEvent) event).getCode() == KeyCode.UP) {
 				int[] coord = world.selected.seDeplacer("N");
 				if(coord == null) {
 					System.out.println("Mouvement impossible");
 				}else {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
+					world.num+=1;
 				}
 			}
-			if(((KeyEvent) event).getCode() == KeyCode.SPACE) {
+			else if(((KeyEvent) event).getCode() == KeyCode.SPACE) {
 				world.changeRobot();
+			}
+			else if(((KeyEvent) event).getCode() == KeyCode.ENTER) {
+				if(world.selected.getSonSecteur().haveMine()) {
+					world.selected.extract_minerais();
+					world.num+=1;
+					world.addTour();
+					world.refreshCapacityRobot();
+					System.out.println("Minage...");
+				}
+				if(world.selected.getSonSecteur().haveEntrepot()) {
+					world.addTour();
+					world.num+=1;
+					System.out.println("Déposage...");				
+				}
+				
 			}
 		}
 	}

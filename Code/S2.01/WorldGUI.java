@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -94,6 +95,7 @@ public class WorldGUI extends Application {
 			num=1;
 			creation();
 			addStats();
+			affichageHelp();
 			rows.setAlignment(Pos.CENTER);
 			((HBox) rows.getChildren().get(11)).setAlignment(Pos.CENTER);
 			Scene scene = new Scene(rows);
@@ -180,8 +182,7 @@ public class WorldGUI extends Application {
 			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("\t|\t" + entrepots.get(j).getSonSecteur().getX()));
 			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text(" ; " + entrepots.get(j).getSonSecteur().getY()));	
 			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("\t|\t " + entrepots.get(j).getTypeMinerai()));		
-			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("\t|\t " + entrepots.get(j).getCapacite()));				
-			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("/" + entrepots.get(j).getCapaciteStockageMax()));	
+			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("\t|\t " + entrepots.get(j).getCapacite()));			
 			((HBox) stats.getChildren().get(sizeMines + j)).setAlignment(Pos.CENTER);
 		}
 		for(int k=0;k<sizeRobots;k++) {
@@ -226,6 +227,20 @@ public class WorldGUI extends Application {
 		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(1, new Text("\t|\t" + afterX));
 		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(2, new Text(" ; " + afterY));	
 	}
+	
+	public void refreshCapacityRobot() {	
+		if(this.selected.getSonSecteur().haveMine()) {
+			int numMine = this.selected.getSonSecteur().getMine().getNumero();
+			((HBox) stats.getChildren().get(numMine)).getChildren().set(4,new Text("\t|\t " + mines.get(numMine).getCapacite()));		
+		}
+		else if(this.selected.getSonSecteur().haveEntrepot()) {
+			int numEnt = this.selected.getSonSecteur().getEntrepot().getNumero();
+			((HBox) stats.getChildren().get(sizeMines +numEnt)).getChildren().set(4,new Text("\t|\t " + entrepots.get(numEnt).getCapacite()));	
+		}
+		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(4, new Text("\t|\t " + this.selected.getCapacite()));
+		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(5, new Text("/" + this.selected.getCapaciteStockageMax()));	
+	}
+	
 	public void changeText(Ressource r) {
 		r.getSonSecteur().getCoord();
 		if(r instanceof Robot) {
@@ -240,6 +255,12 @@ public class WorldGUI extends Application {
 			Mine mi = ((Mine) r);
 		}
 	}
+	
+	public void affichageHelp() {
+		rows.getChildren().add(new HBox());	
+		((HBox) rows.getChildren().get(13)).getChildren().add(new Text("fefe"));
+	}
+	
 	public static void main(String args[])
 	{
 		launch(args);
