@@ -26,18 +26,18 @@ public class Robot extends Ressource {
 	{
 		if (this.getSonSecteur().haveMine() == true) 
 		{
-			if (this.getSonSecteur().getMine().getNbrMinerai() > 0) 
+			if (this.getSonSecteur().getMine().getCap() > 0) 
 			{
-				if (capacite_minage > this.getSonSecteur().getMine().getNbrMinerai()) 
+				if (capacite_minage > this.getSonSecteur().getMine().getCap()) 
 				{
-					while (this.getSonSecteur().getMine().getNbrMinerai() > 0) {
-						this.getSonSecteur().getMine().setNbrMinerai(this.getSonSecteur().getMine().getNbrMinerai()-1);
+					while (this.getSonSecteur().getMine().getCap() > 0) {
+						this.getSonSecteur().getMine().setCap(this.getSonSecteur().getMine().getCap()-1);
 						this.setCapacite(getCapacite()+1);
 					}
 				}
 				else 
 				{
-					this.getSonSecteur().getMine().setNbrMinerai(this.getSonSecteur().getMine().getNbrMinerai()-capacite_minage);
+					this.getSonSecteur().getMine().setCap(this.getSonSecteur().getMine().getCap()-capacite_minage);
 					this.setCapacite(getCapacite()+capacite_minage);
 				}
 			}
@@ -48,8 +48,8 @@ public class Robot extends Ressource {
 	{
 		if (this.getSonSecteur().haveEntrepot() == true)
 		{
+			this.getSonSecteur().getEntrepot().setCap(this.getCapacite() + this.getSonSecteur().getEntrepot().getCap());
 			this.setCapacite(0);
-			this.getSonSecteur().getEntrepot().setNbrMinerai(0);
 		}
 	}
 	
