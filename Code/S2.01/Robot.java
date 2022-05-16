@@ -28,17 +28,20 @@ public class Robot extends Ressource {
 		{
 			if (this.getSonSecteur().getMine().getCap() > 0) 
 			{
-				if (capacite_minage > this.getSonSecteur().getMine().getCap()) 
+				if (getCapacite() < getCapaciteStockageMax())
 				{
-					while (this.getSonSecteur().getMine().getCap() > 0) {
-						this.getSonSecteur().getMine().setCap(this.getSonSecteur().getMine().getCap()-1);
-						this.setCapacite(getCapacite()+1);
+					if (capacite_minage > this.getSonSecteur().getMine().getCap()) 
+					{
+						while (this.getSonSecteur().getMine().getCap() > 0 && getCapacite() < getCapaciteStockageMax()) {
+							this.getSonSecteur().getMine().setCap(this.getSonSecteur().getMine().getCap()-1);
+							this.setCapacite(getCapacite()+1);
+						}
 					}
-				}
-				else 
-				{
-					this.getSonSecteur().getMine().setCap(this.getSonSecteur().getMine().getCap()-capacite_minage);
-					this.setCapacite(getCapacite()+capacite_minage);
+					else 
+					{
+						this.getSonSecteur().getMine().setCap(this.getSonSecteur().getMine().getCap()-capacite_minage);
+						this.setCapacite(getCapacite()+capacite_minage);
+					}
 				}
 			}
 		}
