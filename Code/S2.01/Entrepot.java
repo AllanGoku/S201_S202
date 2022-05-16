@@ -10,11 +10,11 @@ public class Entrepot extends Ressource {
 	}
 	
 
-	public int getNbrMinerai() {
+	public int getCap() {
 		return this.getCapacite();
 	}
 
-	public void setNbrMinerai(int n) {
+	public void setCap(int n) {
 		this.setCapacite(n);
 	}
 }
