@@ -21,6 +21,8 @@ public class Monde {
 	public Monde createWorld()
 	{
 		Random random = new Random();
+		int maxMine = random.nextInt(2)+2;
+		int maxRob = random.nextInt(3)+2;
 		int compEnt = 0;
 		int compMine = 0;
 		int compEau = 0;
@@ -45,12 +47,12 @@ public class Monde {
 					}
 					compEnt+=1;
 				}
-				if(ver == 8 && compMine < 4) {
+				if(ver == 8 && compMine < 4 && compMine < maxMine) {
 					this.lesMines.add(new Mine(compMine+1,"OR",0,sec));
 					sec.setMine(this.lesMines.get(compMine));
 					compMine+=1;
 				}
-				if(ver == 10 && compRob<5) {
+				if(ver == 10 && compRob<5 && compRob < maxRob) {
 					this.lesRobots.add(new Robot(compRob+1,"OR",0,sec,0));
 					sec.setRobot(this.lesRobots.get(compRob));
 					compRob+=1;
