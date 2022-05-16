@@ -37,7 +37,7 @@ public class Robot extends Ressource {
 	
 	public void deposer() 
 	{
-		if (this.getSonSecteur().haveEntrepot() == true && this.getSonSecteur().getMine().getTypeMinerai() == this.getTypeMinerai())
+		if (this.getSonSecteur().haveEntrepot() == true && this.getSonSecteur().getEntrepot().getTypeMinerai() == this.getTypeMinerai())
 		{
 			this.getSonSecteur().getEntrepot().setCap(this.getCapacite() + this.getSonSecteur().getEntrepot().getCap());
 			this.setCapacite(0);
