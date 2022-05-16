@@ -71,16 +71,6 @@ public class Monde {
 		return this.lesSecteurs;
 	}
 	
-	public ArrayList<Robot> getRobots() {
-		return this.lesRobots;
-	}
-	public ArrayList<Entrepot> getEntrepots() {
-		return this.lesEntrepots;
-	}
-	public ArrayList<Mine> getMines() {
-		return this.lesMines;
-	}
-	
 	public void alea() {
 		Random ran = new Random();
 		for(int i=0;i<this.lesMines.size();i++) {
