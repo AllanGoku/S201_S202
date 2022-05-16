@@ -3,14 +3,10 @@ package application;
 import java.util.ArrayList;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -27,6 +23,10 @@ public class WorldGUI extends Application {
 	private int sizeMines;
 	private int sizeEntrepots;
 	private int sizeRobots;
+	
+	private VBox stats;
+	
+	public int num;
 	
 	// selected robot
 	public Robot selected;
@@ -90,7 +90,8 @@ public class WorldGUI extends Application {
 			// Second is the number of the column   -> Sector
 			// Third is the number of the row       -> StackPane
 			// Fourth is the number of the column   -> StackPane
-			
+
+			num=1;
 			creation();
 			addStats();
 			rows.setAlignment(Pos.CENTER);
@@ -121,8 +122,7 @@ public class WorldGUI extends Application {
 		sizeEntrepots = entrepots.size();
 		sizeRobots = robots.size();
 		
-		Secteur[][] lesSecteurs = monde.getSecteurs();  
-		int size = lesSecteurs.length;
+		Secteur[][] lesSecteurs = monde.getSecteurs(); 
 		for(int i=1;i<11;i++) {
 			Secteur[] row = lesSecteurs[i-1];
 			for(int j=1;j<11;j++) {
@@ -134,16 +134,19 @@ public class WorldGUI extends Application {
 					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(1)).getChildren().get(1)).getChildren().add(new Text("X"));
 				}
 				else if(s.haveEntrepot()) {
+					Entrepot ent = s.getEntrepot();
 					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(0)).getChildren().add(new Text("E"));
-					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(1)).getChildren().add(new Text("1"));
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(1)).getChildren().add(new Text(""+ent.getNumero()));
 				}
 				else if(s.haveMine()) {
+					Mine mi = s.getMine();
 					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(0)).getChildren().add(new Text("M"));
-					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(1)).getChildren().add(new Text("1"));
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(1)).getChildren().add(new Text(""+mi.getNumero()));
 				}
 				if(s.haveRobot()) {
+					Robot ro = s.getRobot();
 					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(1)).getChildren().get(0)).getChildren().add(new Text("R"));
-					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(1)).getChildren().get(1)).getChildren().add(new Text("1"));
+					((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(1)).getChildren().get(1)).getChildren().add(new Text(""+ro.getNumero()));
 				}
 			}
 		}
@@ -154,26 +157,41 @@ public class WorldGUI extends Application {
 		// round display
 		rows.getChildren().add(new HBox());		
 		((HBox) rows.getChildren().get(11)).getChildren().add(new Text("Tour "));
-		((HBox) rows.getChildren().get(11)).getChildren().add(new Text("1"));
+		((HBox) rows.getChildren().get(11)).getChildren().add(new Text(""+num));
 		((HBox) rows.getChildren().get(11)).setStyle("-fx-border-color: black; -fx-border-with:5px;");
 		((HBox) rows.getChildren().get(11)).setMaxWidth(525);
 		
 		// vbox for the stats
-		VBox stats = new VBox();
+		stats = new VBox();
 		// display of the stats 
 		for(int i=0;i<sizeMines;i++) {
 			stats.getChildren().add(new HBox());
 			((HBox) stats.getChildren().get(i)).getChildren().add(new Text("M"+(i+1)+" "));
+			((HBox) stats.getChildren().get(i)).getChildren().add(new Text("\t|\t" + mines.get(i).getSonSecteur().getX()));
+			((HBox) stats.getChildren().get(i)).getChildren().add(new Text(" ; " + mines.get(i).getSonSecteur().getY()));	
+			((HBox) stats.getChildren().get(i)).getChildren().add(new Text("\t|\t " + mines.get(i).getTypeMinerai()));		
+			((HBox) stats.getChildren().get(i)).getChildren().add(new Text("\t|\t " + mines.get(i).getCapacite()));				
+			((HBox) stats.getChildren().get(i)).getChildren().add(new Text("/" + mines.get(i).getCapaciteStockageMax()));		
 			((HBox) stats.getChildren().get(i)).setAlignment(Pos.CENTER);
 		}
 		for(int j=0;j<sizeEntrepots;j++) {
 			stats.getChildren().add(new HBox());
 			((HBox) stats.getChildren().get(sizeMines + j)).getChildren().add(new Text("E"+(j+1)+" "));
+			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("\t|\t" + entrepots.get(j).getSonSecteur().getX()));
+			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text(" ; " + entrepots.get(j).getSonSecteur().getY()));	
+			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("\t|\t " + entrepots.get(j).getTypeMinerai()));		
+			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("\t|\t " + entrepots.get(j).getCapacite()));				
+			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("/" + entrepots.get(j).getCapaciteStockageMax()));	
 			((HBox) stats.getChildren().get(sizeMines + j)).setAlignment(Pos.CENTER);
 		}
 		for(int k=0;k<sizeRobots;k++) {
 			stats.getChildren().add(new HBox());
 			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text("R"+(k+1)+" "));
+			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text("\t|\t" + robots.get(k).getSonSecteur().getX()));
+			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text(" ; " + robots.get(k).getSonSecteur().getY()));	
+			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text("\t|\t " + robots.get(k).getTypeMinerai()));		
+			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text("\t|\t " + robots.get(k).getCapacite()));				
+			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text("/" + robots.get(k).getCapaciteStockageMax()));	
 			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).setAlignment(Pos.CENTER);
 		}
 		
@@ -183,7 +201,8 @@ public class WorldGUI extends Application {
 	}
 	
 	public void addTour() {
-		
+		((HBox) rows.getChildren().get(11)).getChildren().remove(1);
+		((HBox) rows.getChildren().get(11)).getChildren().add(new Text(""+num));
 	}
 	
 	public void changeRobot() {
@@ -198,13 +217,29 @@ public class WorldGUI extends Application {
 		beforeX+=1;
 		beforeY+=1;
 		afterX+=1;
-		afterY+=1;
+		afterY+=1;	
+		addTour();		
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(0)).getChildren().remove(0);
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(1)).getChildren().remove(0);
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(0)).getChildren().add(new Text("R"));
-		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(1)).getChildren().add(new Text("1"));
+		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(1)).getChildren().add(new Text(""+this.selected.getNumero()));
+		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(1, new Text("\t|\t" + afterX));
+		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(2, new Text(" ; " + afterY));	
 	}
-	
+	public void changeText(Ressource r) {
+		r.getSonSecteur().getCoord();
+		if(r instanceof Robot) {
+			Robot ro = ((Robot) r);
+			r.getNumero();
+			
+		}
+		if(r instanceof Entrepot) {
+			Entrepot en = ((Entrepot) r);
+		}
+		if(r instanceof Mine) {
+			Mine mi = ((Mine) r);
+		}
+	}
 	public static void main(String args[])
 	{
 		launch(args);
