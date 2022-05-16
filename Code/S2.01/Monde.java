@@ -37,6 +37,7 @@ public class Monde {
 					sec.setEntrepot(this.lesEntrepots.get(compEnt));
 					this.lesEntrepots.add(new Entrepot(2,"NI",sec));
 					sec.setEntrepot(this.lesEntrepots.get(compEnt));
+				compEnt+=2;
 				}
 				if(ver == 8 && compMine < 4) {
 					this.lesMines.add(new Mine(i,"OR",u,sec));
