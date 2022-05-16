@@ -134,4 +134,13 @@ public class Monde {
 			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("OR");
 		}
 	}
+	public ArrayList<Robot> getRobots(){
+		return this.lesRobots;
+	}
+	public ArrayList<Entrepot> getEntrepots(){
+		return this.lesEntrepots;
+	}
+	public ArrayList<Mine> getMines(){
+		return this.lesMines;
+	}
 }
