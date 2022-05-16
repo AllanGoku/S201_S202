@@ -1,4 +1,4 @@
-
+package application;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -69,6 +69,16 @@ public class Monde {
 	
 	public Secteur[][] getSecteurs() {
 		return this.lesSecteurs;
+	}
+	
+	public ArrayList<Robot> getRobots() {
+		return this.lesRobots;
+	}
+	public ArrayList<Entrepot> getEntrepots() {
+		return this.lesEntrepots;
+	}
+	public ArrayList<Mine> getMines() {
+		return this.lesMines;
 	}
 	
 	public void alea() {
