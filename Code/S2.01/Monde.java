@@ -84,7 +84,7 @@ public class Monde {
 		}
 		for(int i=0;i<this.lesRobots.size();i++) {
 			Robot obj = this.lesRobots.get(i);
-			int alea = ran.nextInt(8);
+			int alea = ran.nextInt(4)+5;
 			alea+=1;
 			obj.setCapaciteStockageMax(alea);
 			alea = ran.nextInt(2);
