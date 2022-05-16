@@ -97,7 +97,7 @@ public class Monde {
 			int alea = ran.nextInt(8);
 			alea+=1;
 			obj.setCapaciteStockageMax(alea);
-			obj.setCapacite(alea);
+			obj.setCapacite(0);
 			obj.aleaMinerai();
 			System.out.println("Robots: "+obj.getTypeMinerai()+"["+obj.getSonSecteur().getX()+","+obj.getSonSecteur().getY()+"]");
 		}
