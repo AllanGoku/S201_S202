@@ -1,4 +1,4 @@
-
+package application;
 public class Entrepot extends Ressource {
 	
 	public Entrepot(int n, String t,Secteur sec)

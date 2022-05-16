@@ -1,4 +1,4 @@
-
+package application;
 public class Mine extends Ressource {
 	
 	public Mine(int n, String t, int c,Secteur sec)

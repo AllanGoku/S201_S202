@@ -10,6 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -160,6 +162,8 @@ public class WorldGUI extends Application {
 		rows.getChildren().add(new HBox());		
 		((HBox) rows.getChildren().get(11)).getChildren().add(new Text("Tour "));
 		((HBox) rows.getChildren().get(11)).getChildren().add(new Text(""+num));
+		((Text) ((HBox) rows.getChildren().get(11)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+		((Text) ((HBox) rows.getChildren().get(11)).getChildren().get(1)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
 		((HBox) rows.getChildren().get(11)).setStyle("-fx-border-color: black; -fx-border-with:5px;");
 		((HBox) rows.getChildren().get(11)).setMaxWidth(525);
 		
@@ -204,6 +208,7 @@ public class WorldGUI extends Application {
 	public void addTour() {
 		((HBox) rows.getChildren().get(11)).getChildren().remove(1);
 		((HBox) rows.getChildren().get(11)).getChildren().add(new Text(""+num));
+		((Text) ((HBox) rows.getChildren().get(11)).getChildren().get(1)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
 	}
 	
 	public void changeRobot() {
@@ -231,11 +236,11 @@ public class WorldGUI extends Application {
 	public void refreshCapacityRobot() {	
 		if(this.selected.getSonSecteur().haveMine()) {
 			int numMine = this.selected.getSonSecteur().getMine().getNumero();
-			((HBox) stats.getChildren().get(numMine)).getChildren().set(4,new Text("\t|\t " + mines.get(numMine).getCapacite()));		
+			((HBox) stats.getChildren().get(numMine-1)).getChildren().set(4,new Text("\t|\t " + mines.get(numMine-1).getCapacite()));		
 		}
 		else if(this.selected.getSonSecteur().haveEntrepot()) {
 			int numEnt = this.selected.getSonSecteur().getEntrepot().getNumero();
-			((HBox) stats.getChildren().get(sizeMines +numEnt)).getChildren().set(4,new Text("\t|\t " + entrepots.get(numEnt).getCapacite()));	
+			((HBox) stats.getChildren().get(sizeMines +numEnt-1)).getChildren().set(4,new Text("\t|\t " + entrepots.get(numEnt-1).getCapacite()));	
 		}
 		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(4, new Text("\t|\t " + this.selected.getCapacite()));
 		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(5, new Text("/" + this.selected.getCapaciteStockageMax()));	
@@ -257,8 +262,17 @@ public class WorldGUI extends Application {
 	}
 	
 	public void affichageHelp() {
+		rows.getChildren().add(new VBox());	
+		
+		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Aide"));
+		((Text) ((VBox) rows.getChildren().get(13)).getChildren().get(0)).setUnderline(true);
+		((Text) ((VBox) rows.getChildren().get(13)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+
 		rows.getChildren().add(new HBox());	
-		((HBox) rows.getChildren().get(13)).getChildren().add(new Text("fefe"));
+		((VBox) rows.getChildren().get(13)).setAlignment(Pos.CENTER);
+		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Flèches pour se déplacer"));
+		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Espace pour changer de robot"));
+		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Entrée pour miner/déposer"));
 	}
 	
 	public static void main(String args[])

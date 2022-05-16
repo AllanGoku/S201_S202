@@ -68,8 +68,10 @@ public class EventWorld implements EventHandler{
 					System.out.println("Minage...");
 				}
 				if(world.selected.getSonSecteur().haveEntrepot()) {
+					world.selected.deposer();
 					world.addTour();
 					world.num+=1;
+					world.refreshCapacityRobot();
 					System.out.println("Déposage...");				
 				}
 				

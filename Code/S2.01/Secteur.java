@@ -90,6 +90,10 @@ public class Secteur {
 	public Mine getMine() {
 		return mine;
 	}
+	
+	public Robot getRobot() {
+		return robot;
+	}
 
 	public void setMine(Mine mine) {
 		this.mine = mine;
@@ -130,6 +134,5 @@ public class Secteur {
 	public void setRobot(Robot rob) {
 		this.robot=rob;
 	}
-	
 	
 }
