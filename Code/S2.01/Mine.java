@@ -11,12 +11,12 @@ public class Mine extends Ressource {
 	}
 
 
-	public int getNbrMinerai() {
+	public int getCap() {
 		return getCapacite();
 	}
 
 	
-	public void setNbrMinerai(int n) {
+	public void setCap(int n) {
 		this.setCapacite(n);
 	}
 	
