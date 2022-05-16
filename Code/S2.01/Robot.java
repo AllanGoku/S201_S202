@@ -31,6 +31,7 @@ public class Robot extends Ressource {
 			{
 				this.getSonSecteur().getMine().setCap(this.getSonSecteur().getMine().getCap()-1);
 				this.setCapacite(this.getCapacite()+1);
+				compt+=1;
 			}
 		}
 	}
