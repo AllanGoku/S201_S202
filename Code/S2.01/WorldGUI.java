@@ -11,11 +11,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -110,8 +108,8 @@ public class WorldGUI extends Application {
 			EventWorld e = new EventWorld(this);
 			selected = monde.getRobots().get(0);
 			int[] coord = selected.getCoord();
-			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.PALEVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
-			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.PALEVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
+			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
+			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, e);
 			stage.setScene(scene);
 			stage.sizeToScene();
@@ -256,14 +254,13 @@ public class WorldGUI extends Application {
 		rows.getChildren().add(stats);
 	}
 	
-	public void addTour() {
-		((HBox) rows.getChildren().get(11)).getChildren().remove(1);
-		((HBox) rows.getChildren().get(11)).getChildren().add(new Text(""+num));
-		((Text) ((HBox) rows.getChildren().get(11)).getChildren().get(1)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
-	}
-	
 	public void changeRobot() {
-		
+		if(selected.getNumero()==robots.size()){
+			num+=1;
+			((HBox) rows.getChildren().get(11)).getChildren().remove(1);
+			((HBox) rows.getChildren().get(11)).getChildren().add(new Text(""+num));
+			((Text) ((HBox) rows.getChildren().get(11)).getChildren().get(1)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+		}
 		// Ancient coord
 		int[] coord = new int[2];
 		coord[0] = this.selected.getSonSecteur().getX();
@@ -284,7 +281,6 @@ public class WorldGUI extends Application {
 
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
-		
 	}
 	
 	public void moveRobot(int beforeX, int beforeY, int afterX, int afterY) {
@@ -298,7 +294,6 @@ public class WorldGUI extends Application {
 		beforeY+=1;
 		afterX+=1;
 		afterY+=1;	
-		addTour();	
 		
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(0)).getChildren().remove(0);
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(1)).getChildren().remove(0);
@@ -317,6 +312,7 @@ public class WorldGUI extends Application {
 			((Text) ((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(0)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
 			((Text) ((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(1)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
 		}
+		changeRobot();
 	}
 	
 	public void refreshCapacityRobot() {	
@@ -355,10 +351,26 @@ public class WorldGUI extends Application {
 		((Text) ((VBox) rows.getChildren().get(13)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
 
 		rows.getChildren().add(new HBox());	
+		
 		((VBox) rows.getChildren().get(13)).setAlignment(Pos.CENTER);
-		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Flèches pour se déplacer"));
+		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("FlÃ¨ches pour se dÃ©placer"));
 		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Espace pour changer de robot"));
-		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Entrée pour miner/déposer"));
+		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("EntrÃ©e pour miner/dÃ©poser"));
+	}
+	
+	public boolean verifWin() {
+		boolean win = true;
+		for(Mine m:mines) {
+			if(m.getCapacite()!=0) {
+				win=false;
+			}
+		}
+		for(Robot r:robots) {
+			if(r.getCapacite()!=0) {
+				win=false;
+			}
+		}
+		return win; 
 	}
 	
 	public static void main(String args[])
