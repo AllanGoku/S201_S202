@@ -1,7 +1,13 @@
 package application;
 
+import java.util.Optional;
+
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -23,7 +29,6 @@ public class EventWorld implements EventHandler{
 				}else {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
-					world.num+=1;
 				}
 			}
 			else if(((KeyEvent) event).getCode() == KeyCode.LEFT) {
@@ -33,7 +38,6 @@ public class EventWorld implements EventHandler{
 				}else {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
-					world.num+=1;
 				}
 			}
 			else if(((KeyEvent) event).getCode() == KeyCode.RIGHT) {
@@ -43,7 +47,6 @@ public class EventWorld implements EventHandler{
 				}else {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
-					world.num+=1;
 				}
 			}
 			else if(((KeyEvent) event).getCode() == KeyCode.UP) {
@@ -53,7 +56,6 @@ public class EventWorld implements EventHandler{
 				}else {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
-					world.num+=1;
 				}
 			}
 			else if(((KeyEvent) event).getCode() == KeyCode.SPACE) {
@@ -61,18 +63,35 @@ public class EventWorld implements EventHandler{
 			}
 			else if(((KeyEvent) event).getCode() == KeyCode.ENTER) {
 				if(world.selected.getSonSecteur().haveMine()) {
-					world.selected.extract_minerais();
-					world.num+=1;
-					world.addTour();
-					world.refreshCapacityRobot();
-					System.out.println("Minage...");
+					if(world.selected.getCapacite()==world.selected.getCapaciteStockageMax()) {
+						System.out.println("Le robot est plein!");
+					} else if(world.selected.getSonSecteur().getMine().getCapacite()==0) {
+						System.out.println("La mine est vide!");
+					} else {
+						world.selected.extract_minerais();
+						world.refreshCapacityRobot();
+						System.out.println("Minage...");
+						world.changeRobot();
+					}
 				}
 				if(world.selected.getSonSecteur().haveEntrepot()) {
+					if(world.selected.getCapacite()==0) {
+						System.out.println("Le robot est vide!");
+					} else {
 					world.selected.deposer();
-					world.addTour();
+					if(world.verifWin()) {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Victoire");
+						alert.setHeaderText("Vous avez gagné la partie en "+world.num+" tours !");
+						Optional<ButtonType> result = alert.showAndWait();
+						if (result.get() == ButtonType.OK)
+							Platform.exit();
+					}
 					world.num+=1;
 					world.refreshCapacityRobot();
-					System.out.println("D�posage...");				
+					System.out.println("Déposage...");
+					world.changeRobot();
+					}
 				}
 				
 			}
