@@ -1,5 +1,7 @@
 package application;
 
+
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -33,7 +35,7 @@ public class Monde {
 					compEau+=1;
 				}
 				if(ver == 6 && compEnt < 2) {
-					if(compEnt>1) {
+					if(compEnt>0) {
 						this.lesEntrepots.add(new Entrepot(compEnt+1,"OR", sec));
 						sec.setEntrepot(this.lesEntrepots.get(compEnt));
 					}
@@ -44,13 +46,13 @@ public class Monde {
 					compEnt+=1;
 				}
 				if(ver == 8 && compMine < 4) {
-					this.lesMines.add(new Mine(i,"OR",u,sec));
+					this.lesMines.add(new Mine(compMine+1,"OR",0,sec));
 					sec.setMine(this.lesMines.get(compMine));
 					this.lesMines.get(compMine).setNumero(compMine+1);
 					compMine+=1;
 				}
 				if(ver == 10 && compRob<5) {
-					this.lesRobots.add(new Robot(i,"OR",u,sec,0));
+					this.lesRobots.add(new Robot(compRob+=1,"OR",0,sec,0));
 					sec.setRobot(this.lesRobots.get(compRob));
 					this.lesRobots.get(compRob).setNumero(compRob+1);
 					compRob+=1;
@@ -60,6 +62,7 @@ public class Monde {
 		}
 		this.alea();
 		this.setTypeManquant();
+		lesMines.forEach(lesMines -> System.out.println());
 		return this;
 	}
 	
@@ -78,16 +81,17 @@ public class Monde {
 			obj.setCapaciteStockageMax(alea);
 			obj.setCapacite(alea);
 			obj.aleaMinerai();
-			System.out.println("Mines: "+obj.getTypeMinerai()+"["+obj.getSonSecteur().getX()+","+obj.getSonSecteur().getY()+"]");
 		}
 		for(int i=0;i<this.lesRobots.size();i++) {
 			Robot obj = this.lesRobots.get(i);
 			int alea = ran.nextInt(8);
 			alea+=1;
 			obj.setCapaciteStockageMax(alea);
+			alea = ran.nextInt(2);
+			alea+=1;
+			obj.setCapaciteMinage(alea);
 			obj.setCapacite(0);
 			obj.aleaMinerai();
-			System.out.println("Robots: "+obj.getTypeMinerai()+"["+obj.getSonSecteur().getX()+","+obj.getSonSecteur().getY()+"]");
 		}
 	}
 	
