@@ -105,10 +105,10 @@ public class Monde {
 			}
 			else compOr+=1;
 		}
-		if(compNickel<=1) {
+		if(compNickel<1) {
 			this.lesRobots.get(ran.nextInt(this.lesRobots.size())).setTypeMinerai("NI");
 		}
-		else if(compOr<=1) {
+		else if(compOr<1) {
 			this.lesRobots.get(ran.nextInt(this.lesRobots.size())).setTypeMinerai("OR");
 		}
 		compNickel = 0;
@@ -119,10 +119,10 @@ public class Monde {
 			}
 			else compOr+=1;
 		}
-		if(compNickel<=1) {
+		if(compNickel<1) {
 			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("NI");
 		}
-		else if(compOr<=1) {
+		else if(compOr<1) {
 			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("OR");
 		}
 	}
