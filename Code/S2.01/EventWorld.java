@@ -24,36 +24,28 @@ public class EventWorld implements EventHandler{
 		if(event instanceof KeyEvent) {
 			if(((KeyEvent) event).getCode() == KeyCode.DOWN) {
 				int[] coord = world.selected.seDeplacer("S");
-				if(coord == null) {
-					System.out.println("Mouvement impossible");
-				}else {		
+				if(coord!=null)  {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
 				}
 			}
 			else if(((KeyEvent) event).getCode() == KeyCode.LEFT) {
 				int[] coord = world.selected.seDeplacer("O");
-				if(coord == null) {
-					System.out.println("Mouvement impossible");
-				}else {		
+				if(coord!=null)  {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
 				}
 			}
 			else if(((KeyEvent) event).getCode() == KeyCode.RIGHT) {
 				int[] coord = world.selected.seDeplacer("E");
-				if(coord == null) {
-					System.out.println("Mouvement impossible");
-				}else {		
+				if(coord!=null)  {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
 				}
 			}
 			else if(((KeyEvent) event).getCode() == KeyCode.UP) {
 				int[] coord = world.selected.seDeplacer("N");
-				if(coord == null) {
-					System.out.println("Mouvement impossible");
-				}else {		
+				if(coord!=null)  {		
 					world.moveRobot(coord[0], coord[1],
 							coord[2],coord[3]);
 				}
@@ -63,34 +55,25 @@ public class EventWorld implements EventHandler{
 			}
 			else if(((KeyEvent) event).getCode() == KeyCode.ENTER) {
 				if(world.selected.getSonSecteur().haveMine()) {
-					if(world.selected.getCapacite()==world.selected.getCapaciteStockageMax()) {
-						System.out.println("Le robot est plein!");
-					} else if(world.selected.getSonSecteur().getMine().getCapacite()==0) {
-						System.out.println("La mine est vide!");
-					} else {
-						world.selected.extract_minerais();
+					boolean b = world.selected.extract_minerais();
+					if(b) {
 						world.refreshCapacityRobot();
-						System.out.println("Minage...");
 						world.changeRobot();
 					}
 				}
 				if(world.selected.getSonSecteur().haveEntrepot()) {
-					if(world.selected.getCapacite()==0) {
-						System.out.println("Le robot est vide!");
-					} else {
-					world.selected.deposer();
+					boolean b = world.selected.deposer();
+					if(b) {
+						world.refreshCapacityRobot();
+						world.changeRobot();
+					}
 					if(world.verifWin()) {
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Victoire");
-						alert.setHeaderText("Vous avez gagné la partie en "+world.num+" tours !");
+						alert.setHeaderText("Vous avez gagn� la partie en "+world.num+" tours !");
 						Optional<ButtonType> result = alert.showAndWait();
 						if (result.get() == ButtonType.OK)
 							Platform.exit();
-					}
-					world.num+=1;
-					world.refreshCapacityRobot();
-					System.out.println("Déposage...");
-					world.changeRobot();
 					}
 				}
 				

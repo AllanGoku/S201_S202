@@ -353,9 +353,9 @@ public class WorldGUI extends Application {
 		rows.getChildren().add(new HBox());	
 		
 		((VBox) rows.getChildren().get(13)).setAlignment(Pos.CENTER);
-		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("FlÃ¨ches pour se dÃ©placer"));
-		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Espace pour changer de robot"));
-		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("EntrÃ©e pour miner/dÃ©poser"));
+		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Flèches pour se déplacer"));
+		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Espace pour passer le tour du robot selectionné"));
+		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Entrée pour miner/déposer"));
 	}
 	
 	public boolean verifWin() {
