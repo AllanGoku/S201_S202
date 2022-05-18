@@ -27,35 +27,7 @@ public class Monde {
 		int compRob = 0;
 		for(int i=0;i<10;i++) {
 			for(int u =0; u<10;u++ ) {
-				int ver = random.nextInt(20);
-				Secteur sec = new Secteur(i,u,this);
-				if(ver > 1 && ver < 4 && compEau <= 10) {
-					sec = new Secteur(i,u,this);
-					sec.setEau(true);
-					compEau+=1;
-				}
-				if(ver == 6 && compEnt < 2) {
-					if(compEnt>0) {
-						this.lesEntrepots.add(new Entrepot(compEnt+1,"OR", sec));
-						sec.setEntrepot(this.lesEntrepots.get(compEnt));
-					}
-					else {
-						this.lesEntrepots.add(new Entrepot(compEnt+1,"NI",sec));
-						sec.setEntrepot(this.lesEntrepots.get(compEnt));
-					}
-					compEnt+=1;
-				}
-				if(ver == 8 && compMine < 4) {
-					this.lesMines.add(new Mine(compMine+1,"OR",0,sec));
-					sec.setMine(this.lesMines.get(compMine));
-					compMine+=1;
-				}
-				if(ver == 10 && compRob<5) {
-					this.lesRobots.add(new Robot(compRob+1,"OR",0,sec,0));
-					sec.setRobot(this.lesRobots.get(compRob));
-					compRob+=1;
-				}
-				this.lesSecteurs[i][u] = sec;
+				this.lesSecteurs[i][u] = new Secteur(false,i,u,this);
 			}
 		}
 		this.alea();
@@ -72,34 +44,47 @@ public class Monde {
 	
 	public void alea() {
 		Random ran = new Random();
-		if(this.lesRobots.size()==1) {
-			while(this.lesRobots.size()==1) {
-				int x = ran.nextInt(9); int y = ran.nextInt(9);
-				if(!this.lesSecteurs[x][y].getEau() && !this.lesSecteurs[x][y].haveRobot()) {
-					Robot rob = new Robot(2,"OR",0,this.lesSecteurs[x][y],0);
-					this.lesRobots.add(rob);
-					this.lesSecteurs[x][y].setRobot(rob);
-				}
+		int comp = 0;
+		int compEau = 0;
+		while(this.lesEntrepots.size()<2) {
+			int x = ran.nextInt(9); int y = ran.nextInt(9);
+			if(this.lesEntrepots.size()==0) {
+				Entrepot ent = new Entrepot(comp+1,"OR",this.lesSecteurs[x][y]);
+				this.lesEntrepots.add(ent);
+				this.lesSecteurs[x][y].setEntrepot(ent);
+				comp+=1;
+			} else {
+				Entrepot ent = new Entrepot(comp+1,"NI",this.lesSecteurs[x][y]);
+				this.lesEntrepots.add(ent);
+				this.lesSecteurs[x][y].setEntrepot(ent);
+				comp+=1;
 			}
 		}
-		if(this.lesMines.size()==1) {
-			while(this.lesMines.size()==1) {
-				int x = ran.nextInt(9); int y = ran.nextInt(9);
-				if(!this.lesSecteurs[x][y].getEau() && !this.lesSecteurs[x][y].haveRobot() && !this.lesSecteurs[x][y].haveEntrepot() && !this.lesSecteurs[x][y].haveMine()) {
-					Mine min = new Mine(2,"OR",0,this.lesSecteurs[x][y]);
-					this.lesMines.add(min);
-					this.lesSecteurs[x][y].setMine(min);
-				}
+		while(compEau<ran.nextInt(7)+3) {
+			int x = ran.nextInt(9); int y = ran.nextInt(9);
+			if(!this.lesSecteurs[x][y].haveEntrepot()) {
+				this.lesSecteurs[x][y].setEau(true);
+				compEau+=1;
 			}
 		}
-		if(this.lesEntrepots.size()==1) {
-			while(this.lesEntrepots.size()==1) {
-				int x = ran.nextInt(9); int y = ran.nextInt(9);
-				if(!this.lesSecteurs[x][y].getEau() && !this.lesSecteurs[x][y].haveRobot() && !this.lesSecteurs[x][y].haveEntrepot() && !this.lesSecteurs[x][y].haveMine()) {
-					Entrepot ent = new Entrepot(2,"OR",this.lesSecteurs[x][y]);
-					this.lesEntrepots.add(ent);
-					this.lesSecteurs[x][y].setEntrepot(ent);
-				}
+		comp=0;
+		while(this.lesRobots.size()<ran.nextInt(3)+2) {
+			int x = ran.nextInt(9); int y = ran.nextInt(9);
+			if(!this.lesSecteurs[x][y].getEau() && !this.lesSecteurs[x][y].haveRobot()) {
+				Robot rob = new Robot(comp+1,"OR",0,this.lesSecteurs[x][y],0);
+				this.lesRobots.add(rob);
+				this.lesSecteurs[x][y].setRobot(rob);
+				comp+=1;
+			}
+		}
+		comp=0;
+		while(this.lesMines.size()<ran.nextInt(2)+2) {
+			int x = ran.nextInt(9); int y = ran.nextInt(9);
+			if(!this.lesSecteurs[x][y].getEau() && !this.lesSecteurs[x][y].haveRobot() && !this.lesSecteurs[x][y].haveEntrepot() && !this.lesSecteurs[x][y].haveMine()) {
+				Mine min = new Mine(comp+1,"OR",0,this.lesSecteurs[x][y]);
+				this.lesMines.add(min);
+				this.lesSecteurs[x][y].setMine(min);
+				comp+=1;
 			}
 		}
 		for(int i=0;i<this.lesMines.size();i++) {
