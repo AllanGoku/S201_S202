@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -17,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class WorldGUI extends Application {
@@ -31,7 +33,10 @@ public class WorldGUI extends Application {
 	private int sizeEntrepots;
 	private int sizeRobots;
 	
-	private VBox stats;
+	private HBox line;
+	private VBox elements;
+	private VBox sidebar;
+	private VBox middleRow;
 	
 	public int num;
 	
@@ -41,8 +46,15 @@ public class WorldGUI extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
+			this.line = new HBox();
+			this.elements = new VBox();
+			this.middleRow = new VBox();
 			// Creation of the VBox containing the rows
 			this.rows = new VBox();
+			middleRow.getChildren().add(rows);
+			elements.getChildren().add(middleRow);
+			rows.setMaxWidth(525);
+			rows.setMaxHeight(510);
 			rows.setStyle("-fx-border-color: black;");
 			HBox numX = new HBox();
 			numX.setMaxWidth(525);
@@ -100,13 +112,17 @@ public class WorldGUI extends Application {
 
 			num=1;
 			creation();
-			addStats();
+			selected = robots.get(0);
 			affichageHelp();
+			line.getChildren().add(elements);
+			sideBar();
+			setMiddleRow();
+			
+			// Alignement de la matrice
 			rows.setAlignment(Pos.CENTER);
-			((HBox) rows.getChildren().get(11)).setAlignment(Pos.CENTER);
-			Scene scene = new Scene(rows);
+						
+			Scene scene = new Scene(line);
 			EventWorld e = new EventWorld(this);
-			selected = monde.getRobots().get(0);
 			int[] coord = selected.getCoord();
 			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
 			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -203,63 +219,15 @@ public class WorldGUI extends Application {
 				}
 			}
 		}
+		rows.getChildren().add(new Text("Tour 1"));
+		((Text) rows.getChildren().get(11)).setTextAlignment(TextAlignment.CENTER);
+		((Text) rows.getChildren().get(11)).setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
 	}
-	
-	public void addStats() {
-		
-		// round display
-		rows.getChildren().add(new HBox());		
-		((HBox) rows.getChildren().get(11)).getChildren().add(new Text("Tour "));
-		((HBox) rows.getChildren().get(11)).getChildren().add(new Text(""+num));
-		((Text) ((HBox) rows.getChildren().get(11)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
-		((Text) ((HBox) rows.getChildren().get(11)).getChildren().get(1)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
-		((HBox) rows.getChildren().get(11)).setStyle("-fx-border-color: black; -fx-border-with:5px;");
-		((HBox) rows.getChildren().get(11)).setMaxWidth(525);
-		
-		// vbox for the stats
-		stats = new VBox();
-		// display of the stats 
-		for(int i=0;i<sizeMines;i++) {
-			stats.getChildren().add(new HBox());
-			((HBox) stats.getChildren().get(i)).getChildren().add(new Text("M"+(i+1)+" "));
-			((HBox) stats.getChildren().get(i)).getChildren().add(new Text("\t|\t" + mines.get(i).getSonSecteur().getX()));
-			((HBox) stats.getChildren().get(i)).getChildren().add(new Text(" ; " + mines.get(i).getSonSecteur().getY()));	
-			((HBox) stats.getChildren().get(i)).getChildren().add(new Text("\t|\t " + mines.get(i).getTypeMinerai()));		
-			((HBox) stats.getChildren().get(i)).getChildren().add(new Text("\t|\t " + mines.get(i).getCapacite()));				
-			((HBox) stats.getChildren().get(i)).getChildren().add(new Text("/" + mines.get(i).getCapaciteStockageMax()));		
-			((HBox) stats.getChildren().get(i)).setAlignment(Pos.CENTER);
-		}
-		for(int j=0;j<sizeEntrepots;j++) {
-			stats.getChildren().add(new HBox());
-			((HBox) stats.getChildren().get(sizeMines + j)).getChildren().add(new Text("E"+(j+1)+" "));
-			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("\t|\t" + entrepots.get(j).getSonSecteur().getX()));
-			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text(" ; " + entrepots.get(j).getSonSecteur().getY()));	
-			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("\t|\t " + entrepots.get(j).getTypeMinerai()));		
-			((HBox) stats.getChildren().get(sizeMines +j)).getChildren().add(new Text("\t|\t " + entrepots.get(j).getCapacite()));			
-			((HBox) stats.getChildren().get(sizeMines + j)).setAlignment(Pos.CENTER);
-		}
-		for(int k=0;k<sizeRobots;k++) {
-			stats.getChildren().add(new HBox());
-			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text("R"+(k+1)+" "));
-			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text("\t|\t" + robots.get(k).getSonSecteur().getX()));
-			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text(" ; " + robots.get(k).getSonSecteur().getY()));	
-			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text("\t|\t " + robots.get(k).getTypeMinerai()));		
-			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text("\t|\t " + robots.get(k).getCapacite()));				
-			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).getChildren().add(new Text("/" + robots.get(k).getCapaciteStockageMax()));	
-			((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + k)).setAlignment(Pos.CENTER);
-		}
-		
-		stats.setStyle("-fx-border-color: black; -fx-border-with:5px;");
-		stats.setMaxWidth(525);
-		rows.getChildren().add(stats);
-	}
-	
+
 	public void changeRobot() {
 		if(selected.getNumero()==robots.size()){
 			num+=1;
-			((HBox) rows.getChildren().get(11)).getChildren().remove(1);
-			((HBox) rows.getChildren().get(11)).getChildren().add(new Text(""+num));
-			((Text) ((HBox) rows.getChildren().get(11)).getChildren().get(1)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+			((Text) rows.getChildren().get(11)).setText("Tour "+num);
 		}
 		// Ancient coord
 		int[] coord = new int[2];
@@ -281,26 +249,31 @@ public class WorldGUI extends Application {
 
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
-	}
+		refreshRobotDisplay();
+		}
 	
 	public void moveRobot(int beforeX, int beforeY, int afterX, int afterY) {
 
-		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX+1)).getChildren().get(beforeY+1)).getChildren().get(1)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX+1)).getChildren().get(beforeY+1)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX+1)).getChildren().get(afterY+1)).getChildren().get(1)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
-		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX+1)).getChildren().get(afterY+1)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
-		
 		beforeX+=1;
 		beforeY+=1;
 		afterX+=1;
 		afterY+=1;	
-		
+
+		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
+		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
+
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(0)).getChildren().remove(0);
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(beforeX)).getChildren().get(beforeY)).getChildren().get(1)).getChildren().get(1)).getChildren().remove(0);
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(0)).getChildren().add(new Text("R"));
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(1)).getChildren().add(new Text(""+this.selected.getNumero()));
-		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(1, new Text("\t|\t" + afterX));
-		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(2, new Text(" ; " + afterY));	
+		
+		if(selected.getNumero()-1<3)
+			((VBox) ((HBox) ((VBox) sidebar.getChildren().get(2)).getChildren().get(1)).getChildren().get(selected.getNumero()-1)).getChildren().set(1, new Text("Coordonnees : ("+(afterX-1)+";"+(afterY-1)+")"));	
+		else
+			((VBox) ((HBox) ((VBox) sidebar.getChildren().get(2)).getChildren().get(1)).getChildren().get(selected.getNumero()-4)).getChildren().set(5, new Text("Coordonnees : ("+(afterX-1)+";"+(afterY-1)+")"));	
+
 		if(selected.getTypeMinerai()=="NI") {
 			((Text) ((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(0)).getChildren().get(0)).setFill(Color.GREY);
 			((Text) ((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(afterX)).getChildren().get(afterY)).getChildren().get(1)).getChildren().get(1)).getChildren().get(0)).setFill(Color.GREY);
@@ -318,14 +291,23 @@ public class WorldGUI extends Application {
 	public void refreshCapacityRobot() {	
 		if(this.selected.getSonSecteur().haveMine()) {
 			int numMine = this.selected.getSonSecteur().getMine().getNumero();
-			((HBox) stats.getChildren().get(numMine-1)).getChildren().set(4,new Text("\t|\t " + mines.get(numMine-1).getCapacite()));		
+			numMine-=1;
+			((VBox) ((HBox) ((VBox) sidebar.getChildren().get(0)).getChildren().get(1)).getChildren().get(numMine)).getChildren().set(3, new Text("Capacite : " +
+					mines.get(numMine).getCapacite()+ '/' +mines.get(numMine).getCapaciteStockageMax()));	
 		}
 		else if(this.selected.getSonSecteur().haveEntrepot()) {
 			int numEnt = this.selected.getSonSecteur().getEntrepot().getNumero();
-			((HBox) stats.getChildren().get(sizeMines +numEnt-1)).getChildren().set(4,new Text("\t|\t " + entrepots.get(numEnt-1).getCapacite()));	
+			numEnt-=1;
+			((VBox) ((HBox) ((VBox) sidebar.getChildren().get(1)).getChildren().get(1)).getChildren().get(numEnt)).getChildren().set(2, new Text("Contient : " +
+					entrepots.get(numEnt).getCapacite()));
 		}
-		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(4, new Text("\t|\t " + this.selected.getCapacite()));
-		((HBox) stats.getChildren().get(sizeMines + sizeEntrepots + this.selected.getNumero()-1)).getChildren().set(5, new Text("/" + this.selected.getCapaciteStockageMax()));	
+
+		if(selected.getNumero()-1<3)
+			((VBox) ((HBox) ((VBox) sidebar.getChildren().get(2)).getChildren().get(1)).getChildren().get(selected.getNumero()-1)).getChildren().set(3, new Text("Capacite : " +
+					robots.get(selected.getNumero()-1).getCapacite()+ '/' +robots.get(selected.getNumero()-1).getCapaciteStockageMax()));
+		else
+			((VBox) ((HBox) ((VBox) sidebar.getChildren().get(2)).getChildren().get(1)).getChildren().get(selected.getNumero()-4)).getChildren().set(3, new Text("Capacite : " +
+					robots.get(selected.getNumero()-1).getCapacite()+ '/' +robots.get(selected.getNumero()-1).getCapaciteStockageMax()));
 	}
 	
 	public void changeText(Ressource r) {
@@ -344,18 +326,24 @@ public class WorldGUI extends Application {
 	}
 	
 	public void affichageHelp() {
-		rows.getChildren().add(new VBox());	
-		
-		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Aide"));
-		((Text) ((VBox) rows.getChildren().get(13)).getChildren().get(0)).setUnderline(true);
-		((Text) ((VBox) rows.getChildren().get(13)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+		VBox help = new VBox();		
+		help.setMaxHeight(482);
+		HBox.setMargin(help, new Insets(25,25,25,25));
+		help.getChildren().add(new Text("Aide"));
+		((Text) help.getChildren().get(0)).setUnderline(true);
+		((Text) help.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
 
-		rows.getChildren().add(new HBox());	
+		help.getChildren().add(new VBox());	
 		
-		((VBox) rows.getChildren().get(13)).setAlignment(Pos.CENTER);
-		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Flèches pour se déplacer"));
-		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Espace pour passer le tour du robot selectionné"));
-		((VBox) rows.getChildren().get(13)).getChildren().add(new Text("Entrée pour miner/déposer"));
+		((VBox) help.getChildren().get(1)).setAlignment(Pos.CENTER);
+		((VBox) help.getChildren().get(1)).getChildren().add(new Text("Flèches pour se déplacer"));
+		((VBox) help.getChildren().get(1)).getChildren().add(new Text("Espace pour passer le tour du robot selectionné"));
+		((VBox) help.getChildren().get(1)).getChildren().add(new Text("Entrée pour miner/déposer"));
+		((Text) ((VBox) help.getChildren().get(1)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
+		((Text) ((VBox) help.getChildren().get(1)).getChildren().get(1)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
+		((Text) ((VBox) help.getChildren().get(1)).getChildren().get(2)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
+		help.setAlignment(Pos.CENTER);
+		line.getChildren().add(help);
 	}
 	
 	public boolean verifWin() {
@@ -373,6 +361,167 @@ public class WorldGUI extends Application {
 		return win; 
 	}
 	
+	
+	public void setMiddleRow() {
+		VBox action = new VBox();
+		VBox infRobot = new VBox();
+		middleRow.getChildren().add(action);
+		middleRow.getChildren().add(infRobot);
+		middleRow.setAlignment(Pos.CENTER);
+		middleRow.setSpacing(25);
+		VBox.setMargin(middleRow, new Insets(0,0,25,25));
+		// Current Action infos
+		action.getChildren().add(new Text("Activité en cours"));
+		((Text) action.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 25));
+		action.getChildren().add(new Text("En attente d'une décision"));
+		action.getChildren().add(new Text(""));
+		action.setAlignment(Pos.CENTER);
+		// Currently used Robot infos
+		infRobot.getChildren().add(new Text("Informations robot actuel"));
+		((Text) infRobot.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+		infRobot.getChildren().add(new Text(""));
+		infRobot.getChildren().add(new Text(""));
+		infRobot.getChildren().add(new Text(""));
+		infRobot.getChildren().add(new Text(""));
+		infRobot.getChildren().add(new Text(""));
+		infRobot.setSpacing(5);
+		infRobot.setAlignment(Pos.CENTER);
+		refreshRobotDisplay();
+	}
+	
+	public void sideBar() {
+		sidebar = new VBox();
+		sidebar.setAlignment(Pos.CENTER);
+		sidebar.setSpacing(100);
+		HBox.setMargin(sidebar, new Insets(25,25,25,25));
+		
+		VBox catMines = new VBox();
+		HBox infMines = new HBox();
+		catMines.getChildren().add(new Text("Informations des mines"));
+		((Text) catMines.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+		sidebar.getChildren().add(catMines);
+		catMines.getChildren().add(infMines);
+		catMines.setAlignment(Pos.CENTER);
+		infMines.setSpacing(25);
+		catMines.setSpacing(10);
+
+		VBox catEnt = new VBox();
+		HBox infEnt = new HBox();
+		catEnt.getChildren().add(new Text("Informations des Entrepots"));
+		((Text) catEnt.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+		sidebar.getChildren().add(catEnt);
+		catEnt.getChildren().add(infEnt);
+		catEnt.setAlignment(Pos.CENTER);
+		infEnt.setSpacing(25);
+		catEnt.setSpacing(10);
+
+		VBox catRob = new VBox();
+		HBox infRob = new HBox();
+		catRob.getChildren().add(new Text("Informations des Robots")); 
+		((Text) catRob.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+		sidebar.getChildren().add(catRob);
+		catRob.getChildren().add(infRob);
+		catRob.setAlignment(Pos.CENTER);
+		infRob.setSpacing(25);
+		catRob.setSpacing(10);
+		
+		// display of the stats
+		for(int i=0;i<sizeMines;i++) {
+			infMines.getChildren().add(new VBox());
+			((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Mine n°"+(i+1)));
+			((Text) ((VBox) infMines.getChildren().get(i)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+			((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Coordonnees : (" + 
+			mines.get(i).getSonSecteur().getX()+";"+mines.get(i).getSonSecteur().getY()+")"));
+			((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Type minerai : " + mines.get(i).getTypeMinerai()));		
+			((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Capacite : " +
+			mines.get(i).getCapacite()+ '/' +mines.get(i).getCapaciteStockageMax()));		
+			((VBox) infMines.getChildren().get(i)).setAlignment(Pos.CENTER);
+			infMines.setAlignment(Pos.CENTER);
+		}
+		
+		for(int i=0;i<sizeEntrepots;i++) {
+			infEnt.getChildren().add(new VBox());
+			((VBox) infEnt.getChildren().get(i)).getChildren().add(new Text("Entrepot n°"+(i+1)));
+			((Text) ((VBox) infEnt.getChildren().get(i)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+			((VBox) infEnt.getChildren().get(i)).getChildren().add(new Text("Coordonnees : (" + 
+					entrepots.get(i).getSonSecteur().getX()+";"+mines.get(i).getSonSecteur().getY()+")"));
+			((VBox) infEnt.getChildren().get(i)).getChildren().add(new Text("Type minerai : " + entrepots.get(i).getTypeMinerai()));		
+			((VBox) infEnt.getChildren().get(i)).getChildren().add(new Text("Contient " +
+					entrepots.get(i).getCapacite()+" minerais"));		
+			((VBox) infEnt.getChildren().get(i)).setAlignment(Pos.CENTER);
+			infEnt.setAlignment(Pos.CENTER);
+		}
+		for(int i=0;i<sizeRobots;i++) {
+			if(i<3) {
+				infRob.getChildren().add(new VBox());
+				((VBox) infRob.getChildren().get(i)).getChildren().add(new Text("Robot n°"+(i+1)));
+				((Text) ((VBox) infRob.getChildren().get(i)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+				((VBox) infRob.getChildren().get(i)).getChildren().add(new Text("Coordonnees : (" + 
+						robots.get(i).getSonSecteur().getX()+";"+robots.get(i).getSonSecteur().getY()+")"));
+				((VBox) infRob.getChildren().get(i)).getChildren().add(new Text("Type minerai : " + robots.get(i).getTypeMinerai()));		
+				((VBox) infRob.getChildren().get(i)).getChildren().add(new Text("Capactie : " +
+						robots.get(i).getCapacite()+"/"+robots.get(i).getCapaciteStockageMax()));
+				((VBox) infRob.getChildren().get(i)).setAlignment(Pos.CENTER);
+				infRob.setAlignment(Pos.CENTER);
+			} else {
+				((VBox) infRob.getChildren().get(i-3)).getChildren().add(new Text("Robot n°"+(i+1)));
+				((Text) ((VBox) infRob.getChildren().get(i-3)).getChildren().get(4)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+				((VBox) infRob.getChildren().get(i-3)).getChildren().add(new Text("Coordonnees : (" + 
+						robots.get(i).getSonSecteur().getX()+";"+robots.get(i).getSonSecteur().getY()+")"));
+				((VBox) infRob.getChildren().get(i-3)).getChildren().add(new Text("Type minerai : " + robots.get(i).getTypeMinerai()));		
+				((VBox) infRob.getChildren().get(i-3)).getChildren().add(new Text("Capactie : " +
+						robots.get(i).getCapacite()+"/"+robots.get(i).getCapaciteStockageMax()));
+				((VBox) infRob.getChildren().get(i-3)).setAlignment(Pos.CENTER);
+				infRob.setAlignment(Pos.CENTER);
+			}
+			
+		}
+		line.getChildren().add(sidebar);
+	}
+	
+	public void move(int n, int x, int y) {
+		((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(1)).setText("Le robot n°"+n+" a ete deplace en ("+x+";"+y+")");
+		((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(2)).setText("");
+	}
+	public void errorMove(){
+		((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(1)).setText("Cette direction n'est pas atteignable!");
+		((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(2)).setText("");
+	}
+	
+	public void contenuDebut(boolean mine) {
+		if(mine) {
+			((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(1)).setText("Minage...");			
+			((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(2)).setText("");
+		}else {
+			((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(1)).setText("Depot des ressources...");
+			((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(2)).setText("");
+		}
+	}
+	public void contenuFin(boolean mine) {
+		if(mine) {
+			((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(2)).setText("Minage effectue avec succes");
+		}else {
+			((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(2)).setText("Depot effectue avec succes");
+		}
+	}
+	
+	public void errorContenu(String str) {
+		((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(1)).setText(str);
+		((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(2)).setText("");
+	}
+	
+	public void changeDisplay() {
+		((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(1)).setText("Changement de robot effectue avec succes");
+		((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(2)).setText("");
+		refreshRobotDisplay();
+	}
+	public void refreshRobotDisplay() {
+		((Text)((VBox) middleRow.getChildren().get(2)).getChildren().get(1)).setText("Numero : "+selected.getNumero());
+		((Text)((VBox) middleRow.getChildren().get(2)).getChildren().get(2)).setText("Nombre de minerais : "+selected.getCapacite());
+		((Text)((VBox) middleRow.getChildren().get(2)).getChildren().get(3)).setText("Capacite max : "+selected.getCapaciteStockageMax());
+		((Text)((VBox) middleRow.getChildren().get(2)).getChildren().get(4)).setText("Vitesse de minage : "+selected.getCapaciteMinage());
+		((Text)((VBox) middleRow.getChildren().get(2)).getChildren().get(5)).setText("Coordonnees : ("+selected.getSonSecteur().getX()+";"+selected.getSonSecteur().getY()+")");
+	}
 	public static void main(String args[])
 	{
 		launch(args);
