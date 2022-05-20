@@ -90,12 +90,6 @@ public class Monde {
 				comp+=1;
 			}
 		}
-		for(int i=0;i<this.lesMines.size();i++) {
-			Mine obj = this.lesMines.get(i);
-		}
-		for(int i=0;i<this.lesRobots.size();i++) {
-			Robot obj = this.lesRobots.get(i);
-		}
 	}
 	
 	public void setTypeManquant(){
