@@ -26,8 +26,6 @@ public class Monde {
 			}
 		}
 		this.alea();
-		this.setTypeManquant();
-		lesMines.forEach(lesMines -> System.out.println());
 		return this;
 	}
 	
@@ -93,12 +91,8 @@ public class Monde {
 				comp+=1;
 			}
 		}
-	}
-	
-	public void setTypeManquant(){
 		int compNickel =0;
 		int compOr = 0;
-		Random ran = new Random();
 		for(int i =0; i<this.lesRobots.size();i++) {
 			if(this.lesRobots.get(i).getTypeMinerai()=="NI") {
 				compNickel +=1;
@@ -126,6 +120,7 @@ public class Monde {
 			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("OR");
 		}
 	}
+	
 	public ArrayList<Robot> getRobots(){
 		return this.lesRobots;
 	}
