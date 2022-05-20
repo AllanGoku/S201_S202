@@ -20,11 +20,6 @@ public class Monde {
 	
 	public Monde createWorld()
 	{
-		Random random = new Random();
-		int compEnt = 0;
-		int compMine = 0;
-		int compEau = 0;
-		int compRob = 0;
 		for(int i=0;i<10;i++) {
 			for(int u =0; u<10;u++ ) {
 				this.lesSecteurs[i][u] = new Secteur(false,i,u,this);
@@ -74,6 +69,13 @@ public class Monde {
 				Robot rob = new Robot(comp+1,"OR",0,this.lesSecteurs[x][y],0);
 				this.lesRobots.add(rob);
 				this.lesSecteurs[x][y].setRobot(rob);
+				int alea = ran.nextInt(4)+5;
+				rob.setCapaciteStockageMax(alea);
+				alea = ran.nextInt(2);
+				alea+=1;
+				rob.setCapaciteMinage(alea);
+				rob.setCapacite(0);
+				rob.aleaMinerai();
 				comp+=1;
 			}
 		}
@@ -84,27 +86,12 @@ public class Monde {
 				Mine min = new Mine(comp+1,"OR",0,this.lesSecteurs[x][y]);
 				this.lesMines.add(min);
 				this.lesSecteurs[x][y].setMine(min);
+				int alea = ran.nextInt(50)+50;
+				min.setCapaciteStockageMax(alea);
+				min.setCapacite(alea);
+				min.aleaMinerai();
 				comp+=1;
 			}
-		}
-		for(int i=0;i<this.lesMines.size();i++) {
-			Mine obj = this.lesMines.get(i);
-			int alea = ran.nextInt(50);
-			alea+=50;
-			obj.setCapaciteStockageMax(alea);
-			obj.setCapacite(alea);
-			obj.aleaMinerai();
-		}
-		for(int i=0;i<this.lesRobots.size();i++) {
-			Robot obj = this.lesRobots.get(i);
-			int alea = ran.nextInt(8);
-			alea+=1;
-			obj.setCapaciteStockageMax(alea);
-			alea = ran.nextInt(2);
-			alea+=1;
-			obj.setCapaciteMinage(alea);
-			obj.setCapacite(0);
-			obj.aleaMinerai();
 		}
 	}
 	
