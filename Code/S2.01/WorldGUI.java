@@ -298,8 +298,8 @@ public class WorldGUI extends Application {
 		else if(this.selected.getSonSecteur().haveEntrepot()) {
 			int numEnt = this.selected.getSonSecteur().getEntrepot().getNumero();
 			numEnt-=1;
-			((VBox) ((HBox) ((VBox) sidebar.getChildren().get(1)).getChildren().get(1)).getChildren().get(numEnt)).getChildren().set(2, new Text("Contient : " +
-					entrepots.get(numEnt).getCapacite()));
+			((VBox) ((HBox) ((VBox) sidebar.getChildren().get(1)).getChildren().get(1)).getChildren().get(numEnt)).getChildren().set(3, new Text("Contient " +
+					entrepots.get(numEnt).getCapacite()+" minerais"));
 		}
 
 		if(selected.getNumero()-1<3)
