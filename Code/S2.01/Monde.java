@@ -1,7 +1,5 @@
 package application;
 
-
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -26,6 +24,7 @@ public class Monde {
 			}
 		}
 		this.alea();
+		this.setTypeManquant();
 		return this;
 	}
 	
@@ -91,8 +90,18 @@ public class Monde {
 				comp+=1;
 			}
 		}
+		for(int i=0;i<this.lesMines.size();i++) {
+			Mine obj = this.lesMines.get(i);
+		}
+		for(int i=0;i<this.lesRobots.size();i++) {
+			Robot obj = this.lesRobots.get(i);
+		}
+	}
+	
+	public void setTypeManquant(){
 		int compNickel =0;
 		int compOr = 0;
+		Random ran = new Random();
 		for(int i =0; i<this.lesRobots.size();i++) {
 			if(this.lesRobots.get(i).getTypeMinerai()=="NI") {
 				compNickel +=1;
@@ -120,7 +129,6 @@ public class Monde {
 			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("OR");
 		}
 	}
-	
 	public ArrayList<Robot> getRobots(){
 		return this.lesRobots;
 	}
