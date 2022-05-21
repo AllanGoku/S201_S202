@@ -29,36 +29,37 @@ public class Robot extends Ressource {
 	public boolean extract_minerais() throws ExceptionContenu
 	{
 		if(this.getSonSecteur().haveMine()) {
-			if(this.getCapacite()==this.getCapaciteStockageMax()) {
-				throw new ExceptionContenu("Le robot est plein, rien ne peut etre pris");
+			if(this.getSonSecteur().getMine().getTypeMinerai()!=this.getTypeMinerai()) {
+				throw new ExceptionContenu("La mine et le robot ont un type différent");
 			} else if(this.getSonSecteur().getMine().getCapacite()==0) {
 				throw new ExceptionContenu("La mine est vide, rien ne peut etre pris");
+			} else if(this.getCapacite()==this.getCapaciteStockageMax()) {
+				throw new ExceptionContenu("Le robot est plein, rien ne peut etre pris");
 			}
-			else if (this.getSonSecteur().getMine().getTypeMinerai() == this.getTypeMinerai()) 
+			int compt = 0;
+			while (this.getSonSecteur().getMine().getCap() > 0 && this.getCapacite() < this.getCapaciteStockageMax() && compt < capacite_minage) 
 			{
-				int compt = 0;
-				while (this.getSonSecteur().getMine().getCap() > 0 && this.getCapacite() < this.getCapaciteStockageMax() && compt < capacite_minage) 
-				{
-					this.getSonSecteur().getMine().setCap(this.getSonSecteur().getMine().getCap()-1);
-					this.setCapacite(this.getCapacite()+1);
-					compt+=1;
-				}
-				try {
-					TimeUnit.SECONDS.sleep(1);
-				} catch (InterruptedException e) {	
-				}
-				return true;
+				this.getSonSecteur().getMine().setCap(this.getSonSecteur().getMine().getCap()-1);
+				this.setCapacite(this.getCapacite()+1);
+				compt+=1;
 			}
-		}
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {	
+			}
+			return true;
+			}
 		throw new ExceptionContenu("Il n'y a pas de mine dans le secteur");
 	}
 	
 	public boolean deposer() throws ExceptionContenu
 	{
-		if(this.getCapacite()==0) {
-			throw new ExceptionContenu("Votre robot est vide\nRien a deposer dans l'entrepot!");
-		}
-		if (this.getSonSecteur().haveEntrepot() == true && this.getSonSecteur().getEntrepot().getTypeMinerai() == this.getTypeMinerai())
+		if(this.getSonSecteur().getEntrepot().getTypeMinerai() != this.getTypeMinerai()) {
+			throw new ExceptionContenu("L'entrepot et le robot n'ont pas le meme type");
+		} else if(this.getCapacite()==0) {
+				throw new ExceptionContenu("Votre robot est vide, echec de l'operation");
+			}
+		if (this.getSonSecteur().haveEntrepot())
 		{
 			this.getSonSecteur().getEntrepot().setCap(this.getCapacite() + this.getSonSecteur().getEntrepot().getCap());
 			this.setCapacite(0);
@@ -68,7 +69,7 @@ public class Robot extends Ressource {
 			}
 			return true;
 		}
-		return false;
+		throw new ExceptionContenu("Il n'y a pas d'entreport dans le secteur");
 	}
 	
 	public int[] seDeplacer(String mouv) throws ExceptionDeplacement{

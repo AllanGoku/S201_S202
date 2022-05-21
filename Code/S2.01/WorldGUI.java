@@ -120,7 +120,7 @@ public class WorldGUI extends Application {
 			
 			// Alignement de la matrice
 			rows.setAlignment(Pos.CENTER);
-						
+			VBox.setMargin(rows, new Insets(25,25,0,0));
 			Scene scene = new Scene(line);
 			EventWorld e = new EventWorld(this);
 			int[] coord = selected.getCoord();
@@ -308,21 +308,6 @@ public class WorldGUI extends Application {
 		else
 			((VBox) ((HBox) ((VBox) sidebar.getChildren().get(2)).getChildren().get(1)).getChildren().get(selected.getNumero()-4)).getChildren().set(3, new Text("Capacite : " +
 					robots.get(selected.getNumero()-1).getCapacite()+ '/' +robots.get(selected.getNumero()-1).getCapaciteStockageMax()));
-	}
-	
-	public void changeText(Ressource r) {
-		r.getSonSecteur().getCoord();
-		if(r instanceof Robot) {
-			Robot ro = ((Robot) r);
-			r.getNumero();
-			
-		}
-		if(r instanceof Entrepot) {
-			Entrepot en = ((Entrepot) r);
-		}
-		if(r instanceof Mine) {
-			Mine mi = ((Mine) r);
-		}
 	}
 	
 	public void affichageHelp() {

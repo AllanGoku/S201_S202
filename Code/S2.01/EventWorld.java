@@ -76,10 +76,9 @@ public class EventWorld implements EventHandler{
 						world.changeRobot();
 					} catch (ExceptionContenu e) {
 						world.errorContenu(e.getMessage());
-					}
-					
+					}	
 				}
-				if(world.selected.getSonSecteur().haveEntrepot()) {
+				else if(world.selected.getSonSecteur().haveEntrepot()) {
 					try {
 						world.contenuDebut(false);
 						world.selected.deposer();
