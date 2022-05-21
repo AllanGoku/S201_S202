@@ -2,7 +2,6 @@ package application;
 
 import java.util.concurrent.TimeUnit;
 
-
 public class Robot extends Ressource {
 
 	private int capacite_minage;
@@ -155,4 +154,3 @@ public class Robot extends Ressource {
 		return this.getSonSecteur().getCoord();
 	}
 }
-

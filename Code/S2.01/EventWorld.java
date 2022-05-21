@@ -102,4 +102,3 @@ public class EventWorld implements EventHandler{
 		}
 	}
 }
-
