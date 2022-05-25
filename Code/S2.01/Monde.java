@@ -1,5 +1,7 @@
 package application;
 
+
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -61,14 +63,14 @@ public class Monde {
 		}
 		comp=0;
 		while(this.lesRobots.size()<ran.nextInt(4)+2) {
-			int x = ran.nextInt(9); int y = ran.nextInt(9);
+			int x = ran.nextInt(10); int y = ran.nextInt(10);
 			if(!this.lesSecteurs[x][y].getEau() && !this.lesSecteurs[x][y].haveRobot()) {
 				Robot rob = new Robot(comp+1,"OR",0,this.lesSecteurs[x][y],0);
 				this.lesRobots.add(rob);
 				this.lesSecteurs[x][y].setRobot(rob);
-				int alea = ran.nextInt(4)+5;
+				int alea = ran.nextInt(5)+5;
 				rob.setCapaciteStockageMax(alea);
-				alea = ran.nextInt(2);
+				alea = ran.nextInt(3);
 				alea+=1;
 				rob.setCapaciteMinage(alea);
 				rob.setCapacite(0);
@@ -78,7 +80,7 @@ public class Monde {
 		}
 		comp=0;
 		while(this.lesMines.size()<ran.nextInt(3)+2) {
-			int x = ran.nextInt(9); int y = ran.nextInt(9);
+			int x = ran.nextInt(10); int y = ran.nextInt(10);
 			if(!this.lesSecteurs[x][y].getEau() && !this.lesSecteurs[x][y].haveRobot() && !this.lesSecteurs[x][y].haveEntrepot() && !this.lesSecteurs[x][y].haveMine()) {
 				Mine min = new Mine(comp+1,"OR",0,this.lesSecteurs[x][y]);
 				this.lesMines.add(min);
@@ -116,10 +118,10 @@ public class Monde {
 			}
 			else compOr+=1;
 		}
-		if(compNickel<1) {
+		if(compNickel<1 || compOr>2) {
 			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("NI");
 		}
-		else if(compOr<1) {
+		else if(compOr<1 || compNickel>2) {
 			this.lesMines.get(ran.nextInt(this.lesMines.size())).setTypeMinerai("OR");
 		}
 	}
