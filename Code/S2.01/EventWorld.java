@@ -5,18 +5,30 @@ import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class EventWorld implements EventHandler{
 
 	private WorldGUI world;
+	private Scene game;
+	private HBox lines;
+	private VBox infos;
+	private VBox startPage;
 	
-	public EventWorld(WorldGUI w) {
+	public EventWorld(WorldGUI w, Scene s, HBox h, VBox v, VBox start) {
 		world = w;
+		game = s;
+		lines = h;
+		infos = v;
+		startPage = start;
 	}
 	
 	@Override
@@ -99,6 +111,12 @@ public class EventWorld implements EventHandler{
 				}
 				
 			}
+		} else if(event instanceof MouseEvent && event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getSource().toString().contains("Jouer")) {
+			game.setRoot(lines);
+		} else if(event instanceof MouseEvent && event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getSource().toString().contains("Comment jouer ?")) {
+			game.setRoot(infos);
+		} else if(event instanceof MouseEvent && event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getSource().toString().contains("< Retour")) {
+			game.setRoot(startPage);
 		}
 	}
 }

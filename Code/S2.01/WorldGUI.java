@@ -1,12 +1,16 @@
 package application;
 
+import java.beans.EventHandler;
 import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Labeled;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -121,17 +125,79 @@ public class WorldGUI extends Application {
 			// Alignement de la matrice
 			rows.setAlignment(Pos.CENTER);
 			VBox.setMargin(rows, new Insets(25,25,0,0));
-			Scene scene = new Scene(line);
-			EventWorld e = new EventWorld(this);
+			VBox infos = new VBox();
+			VBox displayLaunch = new VBox();
+			Scene game = new Scene(displayLaunch);
+			EventWorld e = new EventWorld(this, game, line, infos, displayLaunch);
 			int[] coord = selected.getCoord();
 			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
 			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
-			scene.addEventFilter(KeyEvent.KEY_PRESSED, e);
-			stage.setScene(scene);
+			game.addEventFilter(KeyEvent.KEY_PRESSED, e);
 			stage.setMaximized(true);
 			stage.setTitle("Jeu");
 			line.setAlignment(Pos.CENTER);
 			line.setSpacing(50);
+			
+			// Scene avec bouton play
+			VBox text = new VBox();
+			Text titre = new Text("Robot Mineur");
+			Text desc = new Text("Jeu réalisé dans le cadre d'un projet scolaire\n"
+					+ "Université Polytechnique des Hauts de France");	
+			titre.setFont(Font.font("Helvetica", FontWeight.BOLD, 150));
+			desc.setFont(Font.font("Helvetica", FontWeight.NORMAL, 50));
+			VBox buttons = new VBox();
+			Button play = new Button();
+			Button infosPlay = new Button();
+			play.addEventHandler(MouseEvent.MOUSE_CLICKED, e);
+			infosPlay.addEventFilter(MouseEvent.MOUSE_CLICKED, e);
+			play.setText("Jouer");
+			infosPlay.setText("Comment jouer ?");
+			play.setStyle("-fx-font-size:40; -fx-padding: 3 50 3 50;");
+			infosPlay.setStyle("-fx-font-size:20; -fx-padding: 3 30 3 30;");
+			text.getChildren().add(titre);
+			text.getChildren().add(desc);
+			buttons.getChildren().add(play);
+			buttons.getChildren().add(infosPlay);
+			buttons.setSpacing(10);
+			buttons.setAlignment(Pos.CENTER);
+			desc.setTextAlignment(TextAlignment.CENTER);
+			text.setAlignment(Pos.CENTER);
+			
+			displayLaunch.setSpacing(100);
+			displayLaunch.setAlignment(Pos.CENTER);
+			
+			displayLaunch.getChildren().add(text);
+			displayLaunch.getChildren().add(buttons);
+			
+			// Page "Comment jouer ?"
+			infos.setAlignment(Pos.CENTER);
+			infos.setSpacing(50);
+			// Titre
+			infos.getChildren().add(new Text("Comment jouer ?"));
+			((Text) infos.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 70));
+			
+			// Explication du jeu
+			String explication = "Le but du jeu est de déplacer vos robots pour miner des minerais dans les mines"
+					+ " correspondantes au type de votre robot puis d'emener ces minerais dans les entrepôts, tout"
+					+ " ça avec le moins d'actions requises jusqu'a epuisement des mines.\n\n"
+					+ "Les mines sont marqués par un 'M', les robots par un 'R', les entrepots par un 'E', "
+					+ "tous ont une couleur atitrée qui montre le type de minerai, soit gris, soit jaune."
+					+ "Les numéros situés à droite des lettres sont leurs numéros.";
+			Text expl = new Text(explication);
+			expl.setFont(Font.font("Helvetica", FontWeight.NORMAL, 30));
+			expl.setWrappingWidth(900);
+			expl.setTextAlignment(TextAlignment.CENTER);
+			infos.getChildren().add(expl);
+			
+			
+			// Bouton retour dans infos du jeu
+			infos.getChildren().add(new Button("< Retour"));
+			((Button) infos.getChildren().get(2)).addEventHandler(MouseEvent.MOUSE_CLICKED, e);
+			((Button) infos.getChildren().get(2)).setStyle("-fx-font-size:40; -fx-padding: 3 30 3 30;");
+			
+			
+			stage.setScene(game);
+			
 			stage.show();
 			
 		} catch(Exception e) {
