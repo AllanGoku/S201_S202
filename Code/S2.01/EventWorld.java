@@ -15,14 +15,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+@SuppressWarnings("rawtypes")
 public class EventWorld implements EventHandler{
 
+	// Variables de classes utiles pour les changements dans WorldGUI
 	private WorldGUI world;
 	private Scene game;
 	private HBox lines;
 	private VBox infos;
 	private VBox startPage;
 	
+	// Constructeur
 	public EventWorld(WorldGUI w, Scene s, HBox h, VBox v, VBox start) {
 		world = w;
 		game = s;
@@ -31,9 +34,12 @@ public class EventWorld implements EventHandler{
 		startPage = start;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void handle(Event event) {
+		// Gestion des events clavier
 		if(event instanceof KeyEvent) {
+			// Gestion des déplacements
 			if(((KeyEvent) event).getCode() == KeyCode.DOWN) {
 				int[] coord;
 				try {
@@ -74,10 +80,12 @@ public class EventWorld implements EventHandler{
 					world.errorMove();
 				}
 			}
+			// Gestion du changement de robot
 			else if(((KeyEvent) event).getCode() == KeyCode.SPACE) {
 				world.changeRobot();
 				world.changeDisplay();
 			}
+			// Gestion de la touche d'action
 			else if(((KeyEvent) event).getCode() == KeyCode.ENTER) {
 				if(world.selected.getSonSecteur().haveMine()) {
 					try {
@@ -97,6 +105,7 @@ public class EventWorld implements EventHandler{
 						world.contenuFin(false);
 						world.refreshCapacityRobot();
 						world.changeRobot();
+						// Vérification de l'état de la partie au dépôt des ressources
 						if(world.verifWin()) {
 							Alert alert = new Alert(AlertType.INFORMATION);
 							alert.setTitle("Victoire");
@@ -111,8 +120,10 @@ public class EventWorld implements EventHandler{
 				}
 				
 			}
+		// Gestion des boutons des menus précédents le jeu
 		} else if(event instanceof MouseEvent && event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getSource().toString().contains("Jouer")) {
 			game.setRoot(lines);
+			game.addEventFilter(KeyEvent.KEY_PRESSED, this);
 		} else if(event instanceof MouseEvent && event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getSource().toString().contains("Comment jouer ?")) {
 			game.setRoot(infos);
 		} else if(event instanceof MouseEvent && event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getSource().toString().contains("< Retour")) {

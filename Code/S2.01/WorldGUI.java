@@ -1,6 +1,6 @@
 package application;
 
-import java.beans.EventHandler;
+// Importations
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -8,8 +8,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Labeled;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -24,7 +22,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+// Classe
 public class WorldGUI extends Application {
+	// Variables de classe
 	private VBox rows;
 	private Monde monde;
 	
@@ -44,22 +44,27 @@ public class WorldGUI extends Application {
 	
 	public int num;
 	
-	// selected robot
+	// Robot utilisé actuellement
 	public Robot selected;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void start(Stage stage) {
+		// Inclusion dans bloc try pour pouvoir tracer les erreurs avec 'printStackTrace()'
 		try {
+			// Création des éléments qui seront dans la fenêtre de jeu principal
 			this.line = new HBox();
 			this.elements = new VBox();
 			this.middleRow = new VBox();
-			// Creation of the VBox containing the rows
 			this.rows = new VBox();
 			middleRow.getChildren().add(rows);
 			elements.getChildren().add(middleRow);
+			// Définition des dimensions de la grille de jeu
 			rows.setMaxWidth(525);
 			rows.setMaxHeight(510);
+			// Bordures de la grille de jeu
 			rows.setStyle("-fx-border-color: black;");
+			// Numérotation des secteurs
 			HBox numX = new HBox();
 			numX.setMaxWidth(525);
 			numX.getChildren().add(new StackPane());
@@ -75,7 +80,7 @@ public class WorldGUI extends Application {
 				((StackPane) numX.getChildren().get(p)).getChildren().add(new Text((""+(p-1))));
 			}
 			rows.getChildren().add(numX);
-			// Rows creation (loop of 10 because world is 10x10 sectors)
+			// Création des secteurs graphiques (dimensions 10x10)
 			for(int k=1; k<11 ; k++) {
 				rows.getChildren().add(new HBox());
 				((HBox) rows.getChildren().get(k)).getChildren().add(new StackPane());
@@ -113,7 +118,8 @@ public class WorldGUI extends Application {
 			// Second is the number of the column   -> Sector
 			// Third is the number of the row       -> StackPane
 			// Fourth is the number of the column   -> StackPane
-
+			
+			// Lancement de fonctions tiers
 			num=1;
 			creation();
 			selected = robots.get(0);
@@ -124,27 +130,35 @@ public class WorldGUI extends Application {
 			
 			// Alignement de la matrice
 			rows.setAlignment(Pos.CENTER);
+			// Ajout de margin
 			VBox.setMargin(rows, new Insets(25,25,0,0));
+			// Création des éléments utilisés dans la scene de lancement du jeu
 			VBox infos = new VBox();
 			VBox displayLaunch = new VBox();
+			// Attribution de la scene de base
 			Scene game = new Scene(displayLaunch);
+			// Création du gestionnaire d'evenement 
 			EventWorld e = new EventWorld(this, game, line, infos, displayLaunch);
+			// Mise en évidence du Robot 1 pour le premier tour
 			int[] coord = selected.getCoord();
 			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
 			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
-			game.addEventFilter(KeyEvent.KEY_PRESSED, e);
+			// Mise en plein ecran du stage
 			stage.setMaximized(true);
-			stage.setTitle("Jeu");
+			// Ajout du titre de la fenêtre
+			stage.setTitle("Robot Mineur - Le jeu");
+			// Réglage de l'alignement et espacement de la fenêtre de jeu principal
 			line.setAlignment(Pos.CENTER);
 			line.setSpacing(50);
 			
-			// Scene avec bouton play
+			// Scene de base avec bouton play 'Jouer' 'Comment jouer ?'
 			VBox text = new VBox();
 			Text titre = new Text("Robot Mineur");
 			Text desc = new Text("Jeu réalisé dans le cadre d'un projet scolaire\n"
 					+ "Université Polytechnique des Hauts de France");	
 			titre.setFont(Font.font("Helvetica", FontWeight.BOLD, 150));
 			desc.setFont(Font.font("Helvetica", FontWeight.NORMAL, 50));
+			// Gestion des deux boutons de la fenêtre
 			VBox buttons = new VBox();
 			Button play = new Button();
 			Button infosPlay = new Button();
@@ -152,8 +166,8 @@ public class WorldGUI extends Application {
 			infosPlay.addEventFilter(MouseEvent.MOUSE_CLICKED, e);
 			play.setText("Jouer");
 			infosPlay.setText("Comment jouer ?");
-			play.setStyle("-fx-font-size:40; -fx-padding: 3 50 3 50;");
-			infosPlay.setStyle("-fx-font-size:20; -fx-padding: 3 30 3 30;");
+			play.setStyle("-fx-font-size:60; -fx-padding: 0 50 0 50;");
+			infosPlay.setStyle("-fx-font-size:40; -fx-padding: 3 30 3 30;");
 			text.getChildren().add(titre);
 			text.getChildren().add(desc);
 			buttons.getChildren().add(play);
@@ -178,11 +192,11 @@ public class WorldGUI extends Application {
 			
 			// Explication du jeu
 			String explication = "Le but du jeu est de déplacer vos robots pour miner des minerais dans les mines"
-					+ " correspondantes au type de votre robot puis d'emener ces minerais dans les entrepôts, tout"
-					+ " ça avec le moins d'actions requises jusqu'a epuisement des mines.\n\n"
-					+ "Les mines sont marqués par un 'M', les robots par un 'R', les entrepots par un 'E', "
-					+ "tous ont une couleur atitrée qui montre le type de minerai, soit gris, soit jaune."
-					+ "Les numéros situés à droite des lettres sont leurs numéros.";
+					+ " correspondantes au type de votre robot puis d'emmener ces minerais dans les entrepôts, tout"
+					+ " ça avec le moins d'actions requises jusqu'à épuisement des mines.\n\n"
+					+ "Les mines sont marqués par un 'M', les robots par un 'R', les entrepôts par un 'E', "
+					+ "tous ont une couleur attitrée qui montre le type de minerai, soit gris, soit jaune."
+					+ " Les numéros situés à droite des lettres sont leurs numéros.";
 			Text expl = new Text(explication);
 			expl.setFont(Font.font("Helvetica", FontWeight.NORMAL, 30));
 			expl.setWrappingWidth(900);
@@ -198,6 +212,7 @@ public class WorldGUI extends Application {
 			
 			stage.setScene(game);
 			
+			// Affichage de la fenêtre
 			stage.show();
 			
 		} catch(Exception e) {
@@ -206,9 +221,11 @@ public class WorldGUI extends Application {
 	}
 	
 	public void creation() {
+		// Création du monde
 		monde = new Monde();
 		monde.createWorld();
-
+		
+		// Récupération des vvariables les plus utiles
 		mines = monde.getMines();
 		entrepots = monde.getEntrepots();
 		robots = monde.getRobots();
@@ -218,6 +235,7 @@ public class WorldGUI extends Application {
 		sizeRobots = robots.size();
 		
 		Secteur[][] lesSecteurs = monde.getSecteurs(); 
+		// Premier coloriage de toute les cellules en vert
 		for(int i=1;i<11;i++) {
 			for(int j=1;j<11;j++) {
 				((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(0)).getChildren().get(0)).setBackground(new Background(new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -226,6 +244,7 @@ public class WorldGUI extends Application {
 				((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(i)).getChildren().get(j)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, Insets.EMPTY)));			
 			}
 		}
+		// Coloriage des autres cellules avec les couleurs correspondantes
 		for(int i=1;i<11;i++) {
 			Secteur[] row = lesSecteurs[i-1];
 			for(int j=1;j<11;j++) {
@@ -280,17 +299,19 @@ public class WorldGUI extends Application {
 				}
 			}
 		}
+		// Ajout du text des tours
 		rows.getChildren().add(new Text("Tour 1"));
 		((Text) rows.getChildren().get(11)).setTextAlignment(TextAlignment.CENTER);
 		((Text) rows.getChildren().get(11)).setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
 	}
 
 	public void changeRobot() {
+		// Changement du robot selectionné
 		if(selected.getNumero()==robots.size()){
 			num+=1;
 			((Text) rows.getChildren().get(11)).setText("Tour "+num);
 		}
-		// Ancient coord
+		// Ancienne coordonnées
 		int[] coord = new int[2];
 		coord[0] = this.selected.getSonSecteur().getX();
 		coord[1] = this.selected.getSonSecteur().getY();
@@ -304,7 +325,7 @@ public class WorldGUI extends Application {
 			this.selected = robots.get(this.selected.getNumero());
 		}
 		
-		// New coord
+		// Nouvelles coordonnées 
 		coord[0] = this.selected.getSonSecteur().getX();
 		coord[1] = this.selected.getSonSecteur().getY();
 
@@ -312,9 +333,10 @@ public class WorldGUI extends Application {
 		((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
 		refreshRobotDisplay();
 		}
-	
-	public void moveRobot(int beforeX, int beforeY, int afterX, int afterY) {
 
+	// Changement des cases colorés et du texte au changement de robot
+	public void moveRobot(int beforeX, int beforeY, int afterX, int afterY) {
+		 
 		beforeX+=1;
 		beforeY+=1;
 		afterX+=1;
@@ -349,7 +371,8 @@ public class WorldGUI extends Application {
 		changeRobot();
 	}
 	
-	public void refreshCapacityRobot() {	
+	// Actualisation des statistiques
+	public void refreshCapacityRobot() {
 		if(this.selected.getSonSecteur().haveMine()) {
 			int numMine = this.selected.getSonSecteur().getMine().getNumero();
 			numMine-=1;
@@ -371,6 +394,7 @@ public class WorldGUI extends Application {
 					robots.get(selected.getNumero()-1).getCapacite()+ '/' +robots.get(selected.getNumero()-1).getCapaciteStockageMax()));
 	}
 	
+	// Création du panneaux de gauche (aide)
 	public void affichageHelp() {
 		help = new VBox();		
 		help.setMaxHeight(482);
@@ -413,7 +437,7 @@ public class WorldGUI extends Application {
 		refreshRobotDisplay();
 	}
 	
-	
+	// Verification de l'état actuelle de la partie (victoire ou non)
 	public boolean verifWin() {
 		boolean win = true;
 		for(Mine m:mines) {
@@ -429,7 +453,7 @@ public class WorldGUI extends Application {
 		return win; 
 	}
 	
-	
+	// Création de la colonne du milieu 
 	public void setMiddleRow() {
 		VBox action = new VBox();
 		middleRow.getChildren().add(action);
@@ -444,12 +468,14 @@ public class WorldGUI extends Application {
 		action.setAlignment(Pos.CENTER);
 	}
 	
+	// Création de la colonne de droite (infos sur la partie)
 	public void sideBar() {
 		sidebar = new VBox();
 		sidebar.setAlignment(Pos.CENTER);
 		sidebar.setSpacing(100);
 		HBox.setMargin(sidebar, new Insets(25,25,25,25));
-		
+
+		// création catégorie mines
 		VBox catMines = new VBox();
 		HBox infMines = new HBox();
 		catMines.getChildren().add(new Text("Informations des mines"));
@@ -460,6 +486,7 @@ public class WorldGUI extends Application {
 		infMines.setSpacing(25);
 		catMines.setSpacing(10);
 
+		// création catégorie entrepots
 		VBox catEnt = new VBox();
 		HBox infEnt = new HBox();
 		catEnt.getChildren().add(new Text("Informations des Entrepots"));
@@ -470,6 +497,7 @@ public class WorldGUI extends Application {
 		infEnt.setSpacing(25);
 		catEnt.setSpacing(10);
 
+		// création catégorie robots
 		VBox catRob = new VBox();
 		HBox infRob = new HBox();
 		catRob.getChildren().add(new Text("Informations des Robots")); 
@@ -480,7 +508,7 @@ public class WorldGUI extends Application {
 		infRob.setSpacing(25);
 		catRob.setSpacing(10);
 		
-		// display of the stats
+		// affichage des mines
 		for(int i=0;i<sizeMines;i++) {
 			if(i<2) {
 				infMines.getChildren().add(new VBox());
@@ -505,7 +533,8 @@ public class WorldGUI extends Application {
 				infMines.setAlignment(Pos.CENTER);
 			}
 		}
-		
+
+		// affichage des entrepots
 		for(int i=0;i<sizeEntrepots;i++) {
 			infEnt.getChildren().add(new VBox());
 			((VBox) infEnt.getChildren().get(i)).getChildren().add(new Text("Entrepot n°"+(i+1)));
@@ -518,6 +547,8 @@ public class WorldGUI extends Application {
 			((VBox) infEnt.getChildren().get(i)).setAlignment(Pos.CENTER);
 			infEnt.setAlignment(Pos.CENTER);
 		}
+		
+		// affichage des robots
 		for(int i=0;i<sizeRobots;i++) {
 			if(i<3) {
 				infRob.getChildren().add(new VBox());
@@ -545,6 +576,8 @@ public class WorldGUI extends Application {
 		}
 		line.getChildren().add(sidebar);
 	}
+	
+	// Fonction de changement d'affichage de l'activité en cours 
 	
 	public void move(int n, int x, int y) {
 		((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(1)).setText("Le robot n°"+n+" a ete deplace en ("+x+";"+y+")");
@@ -582,6 +615,8 @@ public class WorldGUI extends Application {
 		((Text) ((VBox) middleRow.getChildren().get(1)).getChildren().get(2)).setText("");
 		refreshRobotDisplay();
 	}
+	
+	// Fonction qui change les stats du robot sélectionné quand nous changeons de sélection
 	public void refreshRobotDisplay() {
 		((Text)((VBox) help.getChildren().get(1)).getChildren().get(1)).setText("Numero : "+selected.getNumero());
 		((Text)((VBox) help.getChildren().get(1)).getChildren().get(2)).setText("Nombre de minerais : "+selected.getCapacite());
@@ -589,8 +624,13 @@ public class WorldGUI extends Application {
 		((Text)((VBox) help.getChildren().get(1)).getChildren().get(4)).setText("Vitesse de minage : "+selected.getCapaciteMinage());
 		((Text)((VBox) help.getChildren().get(1)).getChildren().get(5)).setText("Coordonnees : ("+selected.getSonSecteur().getX()+";"+selected.getSonSecteur().getY()+")");
 	}
+	
+	// Lancement du programme
 	public static void main(String args[])
 	{
 		launch(args);
 	}
 }
+
+
+
