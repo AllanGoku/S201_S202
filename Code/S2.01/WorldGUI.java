@@ -1,7 +1,6 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -128,8 +127,10 @@ public class WorldGUI extends Application {
 			((StackPane) ((HBox) ((VBox) ((HBox) rows.getChildren().get(coord[0]+1)).getChildren().get(coord[1]+1)).getChildren().get(1)).getChildren().get(1)).setBackground(new Background(new BackgroundFill(Color.MEDIUMVIOLETRED, CornerRadii.EMPTY, Insets.EMPTY)));
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, e);
 			stage.setScene(scene);
-			stage.sizeToScene();
+			stage.setMaximized(true);
 			stage.setTitle("Jeu");
+			line.setAlignment(Pos.CENTER);
+			line.setSpacing(50);
 			stage.show();
 			
 		} catch(Exception e) {

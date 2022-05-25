@@ -52,7 +52,7 @@ public class Monde {
 				comp+=1;
 			}
 		}
-		while(compEau<ran.nextInt(7)+3) {
+		while(compEau<ran.nextInt(8)+3) {
 			int x = ran.nextInt(9); int y = ran.nextInt(9);
 			if(!this.lesSecteurs[x][y].haveEntrepot()) {
 				this.lesSecteurs[x][y].setEau(true);
@@ -60,7 +60,7 @@ public class Monde {
 			}
 		}
 		comp=0;
-		while(this.lesRobots.size()<ran.nextInt(3)+2) {
+		while(this.lesRobots.size()<ran.nextInt(4)+2) {
 			int x = ran.nextInt(9); int y = ran.nextInt(9);
 			if(!this.lesSecteurs[x][y].getEau() && !this.lesSecteurs[x][y].haveRobot()) {
 				Robot rob = new Robot(comp+1,"OR",0,this.lesSecteurs[x][y],0);
@@ -77,7 +77,7 @@ public class Monde {
 			}
 		}
 		comp=0;
-		while(this.lesMines.size()<ran.nextInt(2)+2) {
+		while(this.lesMines.size()<ran.nextInt(3)+2) {
 			int x = ran.nextInt(9); int y = ran.nextInt(9);
 			if(!this.lesSecteurs[x][y].getEau() && !this.lesSecteurs[x][y].haveRobot() && !this.lesSecteurs[x][y].haveEntrepot() && !this.lesSecteurs[x][y].haveMine()) {
 				Mine min = new Mine(comp+1,"OR",0,this.lesSecteurs[x][y]);
