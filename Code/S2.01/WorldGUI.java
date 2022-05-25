@@ -374,14 +374,17 @@ public class WorldGUI extends Application {
 	// Actualisation des statistiques
 	public void refreshCapacityRobot() {
 		if(this.selected.getSonSecteur().haveMine()) {
-			int numMine = this.selected.getSonSecteur().getMine().getNumero();
-			numMine-=1;
-			((VBox) ((HBox) ((VBox) sidebar.getChildren().get(0)).getChildren().get(1)).getChildren().get(numMine)).getChildren().set(3, new Text("Capacite : " +
+			int numMine = this.selected.getSonSecteur().getMine().getNumero()-1;
+			if(numMine<2)
+				((VBox) ((HBox) ((VBox) sidebar.getChildren().get(0)).getChildren().get(1)).getChildren().get(numMine)).getChildren().set(3, new Text("Capacite : " +
 					mines.get(numMine).getCapacite()+ '/' +mines.get(numMine).getCapaciteStockageMax()));	
+			else
+				((VBox) ((HBox) ((VBox) sidebar.getChildren().get(0)).getChildren().get(1)).getChildren().get(numMine-2)).getChildren().set(3, new Text("Capacite : " +
+						mines.get(numMine-2).getCapacite()+ '/' +mines.get(numMine).getCapaciteStockageMax()));	
+		
 		}
 		else if(this.selected.getSonSecteur().haveEntrepot()) {
-			int numEnt = this.selected.getSonSecteur().getEntrepot().getNumero();
-			numEnt-=1;
+			int numEnt = this.selected.getSonSecteur().getEntrepot().getNumero()-1;
 			((VBox) ((HBox) ((VBox) sidebar.getChildren().get(1)).getChildren().get(1)).getChildren().get(numEnt)).getChildren().set(3, new Text("Contient " +
 					entrepots.get(numEnt).getCapacite()+" minerais"));
 		}
