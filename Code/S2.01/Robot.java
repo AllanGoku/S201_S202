@@ -42,10 +42,6 @@ public class Robot extends Ressource {
 				this.setCapacite(this.getCapacite()+1);
 				compt+=1;
 			}
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {	
-			}
 			return true;
 			}
 		throw new ExceptionContenu("Il n'y a pas de mine dans le secteur");
@@ -62,10 +58,6 @@ public class Robot extends Ressource {
 		{
 			this.getSonSecteur().getEntrepot().setCap(this.getCapacite() + this.getSonSecteur().getEntrepot().getCap());
 			this.setCapacite(0);
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {	
-			}
 			return true;
 		}
 		throw new ExceptionContenu("Il n'y a pas d'entreport dans le secteur");

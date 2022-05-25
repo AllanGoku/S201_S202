@@ -35,6 +35,7 @@ public class WorldGUI extends Application {
 	private HBox line;
 	private VBox elements;
 	private VBox sidebar;
+	private VBox help;
 	private VBox middleRow;
 	
 	public int num;
@@ -305,25 +306,47 @@ public class WorldGUI extends Application {
 	}
 	
 	public void affichageHelp() {
-		VBox help = new VBox();		
+		help = new VBox();		
 		help.setMaxHeight(482);
+		help.setSpacing(75);
 		HBox.setMargin(help, new Insets(25,25,25,25));
-		help.getChildren().add(new Text("Aide"));
-		((Text) help.getChildren().get(0)).setUnderline(true);
-		((Text) help.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
 
-		help.getChildren().add(new VBox());	
+		VBox touches = new VBox();
 		
-		((VBox) help.getChildren().get(1)).setAlignment(Pos.CENTER);
-		((VBox) help.getChildren().get(1)).getChildren().add(new Text("Flèches pour se déplacer"));
-		((VBox) help.getChildren().get(1)).getChildren().add(new Text("Espace pour passer le tour du robot selectionné"));
-		((VBox) help.getChildren().get(1)).getChildren().add(new Text("Entrée pour miner/déposer"));
-		((Text) ((VBox) help.getChildren().get(1)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
-		((Text) ((VBox) help.getChildren().get(1)).getChildren().get(1)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
-		((Text) ((VBox) help.getChildren().get(1)).getChildren().get(2)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
+		touches.getChildren().add(new Text("Aide"));	
+		((Text) touches.getChildren().get(0)).setUnderline(true);
+		((Text) touches.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
+		
+		touches.setAlignment(Pos.CENTER);
+		touches.getChildren().add(new Text("Flèches pour se déplacer"));
+		touches.getChildren().add(new Text("Espace pour passer le tour du robot selectionné"));
+		touches.getChildren().add(new Text("Entrée pour miner/déposer"));
+		((Text) touches.getChildren().get(1)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
+		((Text) touches.getChildren().get(2)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
+		((Text) touches.getChildren().get(3)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
 		help.setAlignment(Pos.CENTER);
 		line.getChildren().add(help);
+		VBox infRobot = new VBox();
+		// Currently used Robot infos
+		infRobot.getChildren().add(new Text("Informations robot actuel"));
+		((Text) infRobot.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+		infRobot.getChildren().add(new Text(""));
+		((Text) infRobot.getChildren().get(1)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
+		infRobot.getChildren().add(new Text(""));
+		((Text) infRobot.getChildren().get(2)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
+		infRobot.getChildren().add(new Text(""));
+		((Text) infRobot.getChildren().get(3)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
+		infRobot.getChildren().add(new Text(""));
+		((Text) infRobot.getChildren().get(4)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
+		infRobot.getChildren().add(new Text(""));
+		((Text) infRobot.getChildren().get(5)).setFont(Font.font("Helvetica", FontWeight.NORMAL, 15));
+		infRobot.setSpacing(5);
+		infRobot.setAlignment(Pos.CENTER);
+		help.getChildren().add(touches);
+		help.getChildren().add(infRobot);
+		refreshRobotDisplay();
 	}
+	
 	
 	public boolean verifWin() {
 		boolean win = true;
@@ -343,9 +366,7 @@ public class WorldGUI extends Application {
 	
 	public void setMiddleRow() {
 		VBox action = new VBox();
-		VBox infRobot = new VBox();
 		middleRow.getChildren().add(action);
-		middleRow.getChildren().add(infRobot);
 		middleRow.setAlignment(Pos.CENTER);
 		middleRow.setSpacing(25);
 		VBox.setMargin(middleRow, new Insets(0,0,25,25));
@@ -355,17 +376,6 @@ public class WorldGUI extends Application {
 		action.getChildren().add(new Text("En attente d'une décision"));
 		action.getChildren().add(new Text(""));
 		action.setAlignment(Pos.CENTER);
-		// Currently used Robot infos
-		infRobot.getChildren().add(new Text("Informations robot actuel"));
-		((Text) infRobot.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
-		infRobot.getChildren().add(new Text(""));
-		infRobot.getChildren().add(new Text(""));
-		infRobot.getChildren().add(new Text(""));
-		infRobot.getChildren().add(new Text(""));
-		infRobot.getChildren().add(new Text(""));
-		infRobot.setSpacing(5);
-		infRobot.setAlignment(Pos.CENTER);
-		refreshRobotDisplay();
 	}
 	
 	public void sideBar() {
@@ -406,16 +416,28 @@ public class WorldGUI extends Application {
 		
 		// display of the stats
 		for(int i=0;i<sizeMines;i++) {
-			infMines.getChildren().add(new VBox());
-			((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Mine n°"+(i+1)));
-			((Text) ((VBox) infMines.getChildren().get(i)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
-			((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Coordonnees : (" + 
-			mines.get(i).getSonSecteur().getX()+";"+mines.get(i).getSonSecteur().getY()+")"));
-			((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Type minerai : " + mines.get(i).getTypeMinerai()));		
-			((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Capacite : " +
-			mines.get(i).getCapacite()+ '/' +mines.get(i).getCapaciteStockageMax()));		
-			((VBox) infMines.getChildren().get(i)).setAlignment(Pos.CENTER);
-			infMines.setAlignment(Pos.CENTER);
+			if(i<2) {
+				infMines.getChildren().add(new VBox());
+				((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Mine n°"+(i+1)));
+				((Text) ((VBox) infMines.getChildren().get(i)).getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+				((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Coordonnees : (" + 
+				mines.get(i).getSonSecteur().getX()+";"+mines.get(i).getSonSecteur().getY()+")"));
+				((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Type minerai : " + mines.get(i).getTypeMinerai()));		
+				((VBox) infMines.getChildren().get(i)).getChildren().add(new Text("Capacite : " +
+				mines.get(i).getCapacite()+ '/' +mines.get(i).getCapaciteStockageMax()));		
+				((VBox) infMines.getChildren().get(i)).setAlignment(Pos.CENTER);
+				infMines.setAlignment(Pos.CENTER);
+			} else {
+				((VBox) infMines.getChildren().get(i-2)).getChildren().add(new Text("Mine n°"+(i+1)));
+				((Text) ((VBox) infMines.getChildren().get(i-2)).getChildren().get(4)).setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+				((VBox) infMines.getChildren().get(i-2)).getChildren().add(new Text("Coordonnees : (" + 
+				mines.get(i).getSonSecteur().getX()+";"+mines.get(i).getSonSecteur().getY()+")"));
+				((VBox) infMines.getChildren().get(i-2)).getChildren().add(new Text("Type minerai : " + mines.get(i).getTypeMinerai()));		
+				((VBox) infMines.getChildren().get(i-2)).getChildren().add(new Text("Capacite : " +
+				mines.get(i).getCapacite()+ '/' +mines.get(i).getCapaciteStockageMax()));		
+				((VBox) infMines.getChildren().get(i-2)).setAlignment(Pos.CENTER);
+				infMines.setAlignment(Pos.CENTER);
+			}
 		}
 		
 		for(int i=0;i<sizeEntrepots;i++) {
@@ -495,11 +517,11 @@ public class WorldGUI extends Application {
 		refreshRobotDisplay();
 	}
 	public void refreshRobotDisplay() {
-		((Text)((VBox) middleRow.getChildren().get(2)).getChildren().get(1)).setText("Numero : "+selected.getNumero());
-		((Text)((VBox) middleRow.getChildren().get(2)).getChildren().get(2)).setText("Nombre de minerais : "+selected.getCapacite());
-		((Text)((VBox) middleRow.getChildren().get(2)).getChildren().get(3)).setText("Capacite max : "+selected.getCapaciteStockageMax());
-		((Text)((VBox) middleRow.getChildren().get(2)).getChildren().get(4)).setText("Vitesse de minage : "+selected.getCapaciteMinage());
-		((Text)((VBox) middleRow.getChildren().get(2)).getChildren().get(5)).setText("Coordonnees : ("+selected.getSonSecteur().getX()+";"+selected.getSonSecteur().getY()+")");
+		((Text)((VBox) help.getChildren().get(1)).getChildren().get(1)).setText("Numero : "+selected.getNumero());
+		((Text)((VBox) help.getChildren().get(1)).getChildren().get(2)).setText("Nombre de minerais : "+selected.getCapacite());
+		((Text)((VBox) help.getChildren().get(1)).getChildren().get(3)).setText("Capacite max : "+selected.getCapaciteStockageMax());
+		((Text)((VBox) help.getChildren().get(1)).getChildren().get(4)).setText("Vitesse de minage : "+selected.getCapaciteMinage());
+		((Text)((VBox) help.getChildren().get(1)).getChildren().get(5)).setText("Coordonnees : ("+selected.getSonSecteur().getX()+";"+selected.getSonSecteur().getY()+")");
 	}
 	public static void main(String args[])
 	{
