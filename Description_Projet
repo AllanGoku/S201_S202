@@ -7,62 +7,124 @@ Equipe de développement :
 Séance n°1 (BEN) : 22/03/2022
   Travail effectué :  Diagramme de classe
                       Repository GitHub
+                      creation de la classe Description_Projet
                       
                       
 Séance N°2 (BEN) : 23/03/2022
   Travail effectué : Modification des différents codes 
                      Diagramme UML
+                     
+                     
   
   
 Séance N°3 (TP) : 02/05/2022
   Travail effectué : Modification des différents codes 
                      Mise à jour du diagramme UML
+                     Ajout de méthodes 
+                     Création interface ressource
+                     changement de interface vers classe abstraite 
+                     ajout de méhodes 
+                     Ajout de la nouvelle version de l'UML
+                     Update Main.jave / Mine.java / Monde.java
   
   
 Séance N°4 (TP) : 02/05/2022
-  Travail effectué :
+  Travail effectué : Modification des différents codes 
+                     Mise à jour du diagramme UML
+                     Ajout de méthodes 
+                     Création interface ressource
+                     changement de interface vers classe abstraite 
+                     ajout de méhodes 
+                     Ajout de la nouvelle version de l'UML
+                     Update Main.jave / Mine.java / Monde.java
   
   
 Séance N°5 (BEN) : 06/05/2022
   Travail effectué : Modification des différents codes 
                      Création de la class WorldGUI pour éxécution du jeu 
+                     mise à jour de la classe Mine
+                     Mise à jour Entrepôt
+                     Mise à jour Ressources
+                     Save WorldGUI
+                     Edit temporaire
+                     Update Description_Projet
   
   
 Séance N°6 (BEN) : 09/05/2022
   Travail effectué : Modification des différents codes 
                      Modification de la class WorldGUI
+                     Création du monde avec valeurs alétatoires 
+                     changements de WorldGUI et Monde 
+                     Update Robot.java / Ressource.java / Description_Projet
   
   
 Séance N°7 (TD) : 10/05/2022
-  Travail effectué :
+  Travail effectué : Modification des différents codes 
+                     Changements de monde et WorldGUI
+                     Suppression de constructeur
+                     Ajout de variable
+                     Ajout de déplacements
+                     Update WorldGUI.java
   
   
 Séance N°8 (TP) : 13/05/2022
-  Travail effectué : 
+  Travail effectué : Modification des différents codes 
+                     Changements WorldGUI et ajout d'event
+                     Modification robot 
+                     Mise à jour déplacement du robot 
+                     Update Monde.java / Robot.java
   
   
 Séance N°9 (TD) : 16/05/2022
-  Travail effectué :
+  Travail effectué : Modification des différents codes 
+                     Capacité de départ des mines ajouté 
+                     Ajout de la méthode déposer et rectification 
+                     Correction
+                     ajout des get (listes,robots,entrepôts,mines)
+                     Modification construction 
+                     Update de plusieurs fichiers 
+                     Ajout des couleurs sur le GUI 
+                     
   
   
 Séance N°10 (BEN) : 18/05/2022
-  Travail effectué : 
+  Travail effectué : Modification des différents codes 
+                     Correction 
+                     Ajout d'exeption
+                     Modification de la création de monde 
   
   
 Séance N°11 (BEN) : 18/05/2022
-  Travail effectué : 
+  Travail effectué : Modification des différents codes 
+                     Correction 
+                     Ajout d'exeption
+                     Modification de la création de monde 
   
   
 Séance N°12 (TP) : 20/05/2022
-  Travail effectué :
+  Travail effectué : Modification des différents codes 
+                     Changements de plusieurs classes 
+                     Remove de Main
+                     Différents updates 
   
   
 Séance N°13 (TP) : 24/05/2022
-  Travail effectué :
+  Travail effectué : Modification des différents codes 
+                     Changements de plusieurs classes 
+                     Remove de Main
+                     Différents updates 
+                     Create README.md
+                     Correction erreur affichage et action 
+                     résolution bug graphique entrepôt
   
   
 Séance N°14 (BEN) : 25/05/2022
-  Travail effectué : 
+  Travail effectué : Modification des différents codes
+                     Changement dans l'affichage de World
+                     Changement lancement 
+                     Changement d'affichage WorldGUI
+                     Ajout d'interface de début 
+                     Ajout d'information 
   
   
 Séance N°15 (TD) : 30/05/2022
