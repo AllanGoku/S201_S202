@@ -379,8 +379,9 @@ public class WorldGUI extends Application {
 				((VBox) ((HBox) ((VBox) sidebar.getChildren().get(0)).getChildren().get(1)).getChildren().get(numMine)).getChildren().set(3, new Text("Capacite : " +
 					mines.get(numMine).getCapacite()+ '/' +mines.get(numMine).getCapaciteStockageMax()));	
 			else
-				((VBox) ((HBox) ((VBox) sidebar.getChildren().get(0)).getChildren().get(1)).getChildren().get(numMine-2)).getChildren().set(3, new Text("Capacite : " +
-						mines.get(numMine-2).getCapacite()+ '/' +mines.get(numMine).getCapaciteStockageMax()));	
+				((VBox) ((HBox) ((VBox) sidebar.getChildren().get(0)).getChildren().get(1)).getChildren().get(numMine-2)).getChildren().set(7
+						, new Text("Capacite : " +
+						mines.get(numMine).getCapacite()+ '/' +mines.get(numMine).getCapaciteStockageMax()));	
 		
 		}
 		else if(this.selected.getSonSecteur().haveEntrepot()) {
