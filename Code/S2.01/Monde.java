@@ -134,4 +134,11 @@ public class Monde {
 	public ArrayList<Mine> getMines(){
 		return this.lesMines;
 	}
+	public void addRobot(Robot r) {
+		this.lesRobots.add(r);
+	}
+	
+	public void addMine(Mine m) {
+		this.lesMines.add(m);
+	}
 }
