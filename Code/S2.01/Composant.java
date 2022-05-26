@@ -3,7 +3,7 @@ package application;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class Ressource{
+public abstract class Composant{
 	private String typeMinerai;
 	private int CapaciteStockageMax;
 	private int capacite;
