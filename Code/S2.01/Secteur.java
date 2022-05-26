@@ -2,7 +2,7 @@ package application;
 
 public class Secteur {
 	private boolean eau;
-	private Ressource[][] contenu;
+	private Composant[][] contenu;
 	private Mine mine;
 	private Entrepot entrepot;
 	private Robot robot;
@@ -12,8 +12,8 @@ public class Secteur {
 	public Secteur(int x, int y, Monde w)
 	{
 		this.eau = false;
-		Ressource[] first = new Ressource[2]; Ressource[] second = new Ressource[2];
-		this.contenu = new Ressource[][] {first, second};
+		Composant[] first = new Composant[2]; Composant[] second = new Composant[2];
+		this.contenu = new Composant[][] {first, second};
 		this.mine = null; this.entrepot = null;	this.robot = null;
 		this.coord = new int[2];
 		this.coord[0] = x;
@@ -37,8 +37,8 @@ public class Secteur {
 		{
 			this.eau = true;
 			this.mine = null; this.entrepot = null; this.robot = null;
-			Ressource[] first = new Ressource[2]; Ressource[] second = new Ressource[2];
-			this.contenu = new Ressource[][] {first, second};
+			Composant[] first = new Composant[2]; Composant[] second = new Composant[2];
+			this.contenu = new Composant[][] {first, second};
 			this.contenu[0] = first; this.contenu[1] = second;
 			this.sonMonde = w;
 		}
@@ -61,11 +61,11 @@ public class Secteur {
 		this.eau = e;
 	}
 	
-	public Ressource[][] getContenu() {
+	public Composant[][] getContenu() {
 		return this.contenu;
 	}
 	
-	public void setContenu(Ressource[][] c) {
+	public void setContenu(Composant[][] c) {
 		this.contenu = c;
 	}
 	
