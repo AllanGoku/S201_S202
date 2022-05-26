@@ -1,5 +1,5 @@
 package application;
-public class Mine extends Ressource {
+public class Mine extends Composant {
 	
 	public Mine(int n, String t, int c,Secteur sec)
 	{
