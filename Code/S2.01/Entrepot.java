@@ -1,5 +1,5 @@
 package application;
-public class Entrepot extends Ressource {
+public class Entrepot extends Composant {
 	
 	public Entrepot(int n, String t,Secteur sec)
 	{
