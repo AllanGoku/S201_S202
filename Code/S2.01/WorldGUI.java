@@ -482,7 +482,7 @@ public class WorldGUI extends Application {
 		// création catégorie mines
 		VBox catMines = new VBox();
 		HBox infMines = new HBox();
-		catMines.getChildren().add(new Text("Informations des mines"));
+		catMines.getChildren().add(new Text("Informations des Mines"));
 		((Text) catMines.getChildren().get(0)).setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
 		sidebar.getChildren().add(catMines);
 		catMines.getChildren().add(infMines);
