@@ -1,6 +1,6 @@
 package application;
 
-public class Robot extends Ressource {
+public class Robot extends Composant {
 
 	private int capacite_minage;
 	
