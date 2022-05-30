@@ -1,3 +1,5 @@
+package application;
+
 import static org.junit.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -108,5 +110,4 @@ class NosTest extends TestCase
 		assertTrue((robot1.getTypeMinerai() == "OR" & robot2.getTypeMinerai()=="NI")||(robot2.getTypeMinerai() == "OR" & robot1.getTypeMinerai()=="NI"));
 		assertTrue((mine1.getTypeMinerai() == "OR" & mine2.getTypeMinerai()=="NI")||(mine2.getTypeMinerai() == "OR" & mine1.getTypeMinerai()=="NI"));
 	}
-}
 }
